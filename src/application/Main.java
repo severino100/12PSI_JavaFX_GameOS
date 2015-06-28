@@ -6,13 +6,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 
@@ -32,6 +26,8 @@ public class Main extends Application {
 		    grid.setVgap(10);
 		    grid.setPadding(new Insets(50, 50, 50, 50));
 			grid.setStyle("-fx-background-color: #336699;");
+			
+			
 			//Username
 			Label username = new Label("Username");
 			username.setStyle("-fx-text-fill: #FFFFFF;-fx-font-size: 18pt;");
