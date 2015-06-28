@@ -29,8 +29,8 @@ public class MenuOp {
 	static TableView<Jogos> tableAlunos = new TableView<>();
 	static ObservableList<Jogos> listaAlunos = FXCollections.observableArrayList();
 	
-	static TableView<Jogos> tableEnc = new TableView<>();
-	static ObservableList<Jogos> listaEnc = FXCollections.observableArrayList();
+	static TableView<Encomendas> tableEnc = new TableView<>();
+	static ObservableList<Encomendas> listaEnc = FXCollections.observableArrayList();
 	
 	public static Scene menuFunc(){
 		
@@ -130,11 +130,7 @@ public class MenuOp {
 		
 		
 		MenuItem jogosEditFunc = new MenuItem("Alterar Jogo");
-		
-		
-		
-		
-		
+			
 		jogosEditFunc.setOnAction(e->{
 			GridPane grid = new GridPane();
 		    grid.setHgap(10);
@@ -193,7 +189,7 @@ public class MenuOp {
 							//new ImageView(new Image("/images/setor.jpg"))
 					
 					//tableAlunos.getItems().add(novoJogo);
-					tableAlunos.getItems().get(tableAlunos.getSelectionModel().getSelectedIndex());
+					tableAlunos.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
 					txtNumAluno.clear();
 					txtNomeAluno.clear();
 				}
@@ -320,9 +316,9 @@ public class MenuOp {
 		    grid.setHgap(10);
 		    grid.setVgap(10);
 		    grid.setPadding(new Insets(50, 50, 50, 50));
-		    TableColumn<Jogos, String> colunaNome = new TableColumn<>("Nome do Jogo");
-			TableColumn<Jogos, String> colunaNumero = new TableColumn<>("Preço");
-			TableColumn<Jogos, String> colunaQuem = new TableColumn<>("Autor");
+		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
+			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço");
+			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
 			
 			
 			colunaNome.setMinWidth(200);	//Largura em pixeis da coluna
@@ -339,7 +335,7 @@ public class MenuOp {
 			tableEnc.getColumns().addAll( colunaNome,colunaNumero, colunaQuem);
 			
 			//Carregar a lista com dados
-			tableEnc.setItems( carregarListaAlunos() );
+			tableEnc.setItems( carregarListaEncomendas() );
 			
 			//Campo Nª
 			TextField txtNumAluno = new TextField();
@@ -373,9 +369,10 @@ public class MenuOp {
 					//Se txtNumAluno não é número => ERRO
 					//Se txtNomeAluno não é texto => ERRO
 					
-					Jogos novoJogo = new Jogos(
-						txtNumAluno.getText(),
-							txtNomeAluno.getText());
+					Encomendas novoJogo = new Encomendas(
+							txtNumAluno.getText(),
+							txtNomeAluno.getText(),
+							txtNomeAutor.getText());
 							//new ImageView(new Image("/images/setor.jpg"))
 					
 					tableEnc.getItems().add(novoJogo);
@@ -438,30 +435,7 @@ public class MenuOp {
 	 *----                    Funcionarios Opcoes                      -----
 	 *----                                                             ----- 
 	 *----------------------------------------------------------------------*/
-//public static Scene menuOpFuncVenderJogo(){
-		
-		/*----------------------------------------------------------------------
-		 *----                                                             -----
-		 *----                          fUNCIONARIO                        -----
-		 *----                                                             ----- 
-		 *----------------------------------------------------------------------*/
-		
-		/*if()
-		
-		
-		BorderPane funcionario = new BorderPane();
-		Scene sceneFuncionario = new Scene(funcionario,520,200);
-		funcionario.setStyle("-fx-text-fill: #FFFFFF;-fx-font-size: 13pt;-fx-background-color: #1A0A00;");
-		funcionario.setTop(menuBar);*/
-		/*----------------------------------------------------------------------
-		 *----                                                             -----
-		 *----                          Termina                            -----
-		 *----                                                             ----- 
-		 *----------------------------------------------------------------------*/
-		//return sceneFuncionario;
-		
-		
-	//}
+
 	public static Scene menuCliente(){
 			
 		/*----------------------------------------------------------------------
@@ -581,5 +555,12 @@ public class MenuOp {
 			
 			
 			return listaAlunos;
+		}
+		
+		private static ObservableList<Encomendas> carregarListaEncomendas() {
+			// TODO Auto-generated method stub
+			
+			
+			return listaEnc;
 		}
 }
