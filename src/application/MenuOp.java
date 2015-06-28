@@ -29,6 +29,9 @@ public class MenuOp {
 	static TableView<Jogos> tableAlunos = new TableView<>();
 	static ObservableList<Jogos> listaAlunos = FXCollections.observableArrayList();
 	
+	static TableView<Jogos> tableEnc = new TableView<>();
+	static ObservableList<Jogos> listaEnc = FXCollections.observableArrayList();
+	
 	public static Scene menuFunc(){
 		
 		/*----------------------------------------------------------------------
@@ -190,7 +193,7 @@ public class MenuOp {
 							//new ImageView(new Image("/images/setor.jpg"))
 					
 					//tableAlunos.getItems().add(novoJogo);
-					
+					tableAlunos.getItems().get(tableAlunos.getSelectionModel().getSelectedIndex());
 					txtNumAluno.clear();
 					txtNomeAluno.clear();
 				}
@@ -282,6 +285,17 @@ public class MenuOp {
 		
 		menuJogos.getItems().addAll(jogosAddFunc, jogosEditFunc, jogosDeleteFunc);
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		Menu menuCliente = new Menu("C_liente");
 		MenuItem addCliente = new MenuItem("Adicionar Cliente");
 		MenuItem editClinete = new MenuItem("Alterar Cliente");
@@ -289,8 +303,104 @@ public class MenuOp {
 		
 		menuCliente.getItems().addAll(addCliente, editClinete, deleteCliente);
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		Menu menuEncomendas = new Menu("E_ncomendas");
 		MenuItem fazerEncFunc = new MenuItem("Fazer uma Encomenda");
+		
+		fazerEncFunc.setOnAction(e->{
+			GridPane grid = new GridPane();
+		    grid.setHgap(10);
+		    grid.setVgap(10);
+		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    TableColumn<Jogos, String> colunaNome = new TableColumn<>("Nome do Jogo");
+			TableColumn<Jogos, String> colunaNumero = new TableColumn<>("Preço");
+			TableColumn<Jogos, String> colunaQuem = new TableColumn<>("Autor");
+			
+			
+			colunaNome.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+			//Nome do atributo, na ObservableList, onde vai ler os dados
+			colunaQuem.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaQuem.setCellValueFactory(new PropertyValueFactory<>("autor"));
+			//Coluna Numero
+			
+			colunaNumero.setMinWidth(200);
+			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
+			
+			//Associar as colunas à tabela
+			tableEnc.getColumns().addAll( colunaNome,colunaNumero, colunaQuem);
+			
+			//Carregar a lista com dados
+			tableEnc.setItems( carregarListaAlunos() );
+			
+			//Campo Nª
+			TextField txtNumAluno = new TextField();
+			txtNumAluno.setPromptText("Preço");
+			txtNumAluno.setMinWidth(120);
+			txtNumAluno.setMaxWidth(120);
+			
+			//Campo Nome
+			TextField txtNomeAluno = new TextField();
+			txtNomeAluno.setPromptText("Nome");
+			//txtNomeAluno.setMinWidth(120);
+			txtNomeAluno.setMaxWidth(120);
+			
+			TextField txtNomeAutor = new TextField();
+			txtNomeAutor.setPromptText("Autor");
+			//txtNomeAluno.setMinWidth(120);
+			txtNomeAutor.setMaxWidth(120);
+			
+			
+			//Botões para adicionar
+			Button btnAdd = new Button("Encomendar");	//Botão Adicionar
+			btnAdd.setOnAction(a -> {
+				/* Se um dos campos estiver vazio, emite msg
+				 * Caso contrário, passa os dados para o método addAluno()*/
+				
+				if(txtNumAluno.getText().isEmpty() || txtNomeAluno.getText().isEmpty()) {
+					MenuOp.alertBox("ERRO",  "Preencha os campos");
+				}
+				else {
+					//TODO
+					//Se txtNumAluno não é número => ERRO
+					//Se txtNomeAluno não é texto => ERRO
+					
+					Jogos novoJogo = new Jogos(
+						txtNumAluno.getText(),
+							txtNomeAluno.getText());
+							//new ImageView(new Image("/images/setor.jpg"))
+					
+					tableEnc.getItems().add(novoJogo);
+					
+					txtNumAluno.clear();
+					txtNomeAluno.clear();
+				}
+			});
+			
+			HBox layoutEdit = new HBox(10);
+			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
+			layoutEdit.getChildren().addAll(txtNumAluno, txtNomeAluno,txtNomeAutor, btnAdd);
+			
+			//Arranjar verticalmente a Table e a HBox layoutEdit
+			VBox layoutSub = new VBox(10);
+			layoutSub.getChildren().addAll(tableEnc, layoutEdit);
+			
+			
+			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutSub, 4, 7);
+			
+			funcionario.setCenter(grid);
+			
+		});
+		
 		MenuItem alterarEncFunc = new MenuItem("Alterar uma Encomenda");
 		MenuItem eliminarEncFunc = new MenuItem("Eliminar uma Encomenda");
 		
@@ -468,23 +578,6 @@ public class MenuOp {
 		
 		private static ObservableList<Jogos> carregarListaAlunos() {
 			// TODO Auto-generated method stub
-			
-			//listaAlunos.add(new Aluno(0, "A.Ferraz", new ImageView(new Image("\images\setor.jpg"))));
-			//listaAlunos.add(new Aluno(0, "A.Ferraz", new ImageView(new Image("/images/ventura.png"))));
-			//listaAlunos.add(new Aluno(1, "Bruno", new ImageView(new Image("/images/bruno.jpg"))));
-			/*listaAlunos.add(new Aluno(0, "A.Ferraz"));
-			listaAlunos.add(new Aluno(1, "Bruno"));
-			listaAlunos.add(new Aluno(2, "Catalin"));
-			listaAlunos.add(new Aluno(3, "David"));
-			listaAlunos.add(new Aluno(6, "Ventura"));
-			listaAlunos.add(new Aluno(7, "Jorge"));
-			listaAlunos.add(new Aluno(8, "Marcelo"));
-			listaAlunos.add(new Aluno(9, "Mariana"));
-			listaAlunos.add(new Aluno(10, "Patricia"));
-			listaAlunos.add(new Aluno(11, "Ricardo"));
-			listaAlunos.add(new Aluno(12, "Ruben"));
-			listaAlunos.add(new Aluno(14, "Rui"));
-			listaAlunos.add(new Aluno(15, "Samuel"));*/
 			
 			
 			return listaAlunos;
