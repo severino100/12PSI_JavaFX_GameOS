@@ -32,6 +32,8 @@ public class MenuOp {
 	static TableView<Encomendas> tableEnc = new TableView<>();
 	static ObservableList<Encomendas> listaEnc = FXCollections.observableArrayList();
 	
+	static TableView<Cliente> tableCliente = new TableView<>();
+	static ObservableList<Cliente> listaCliente = FXCollections.observableArrayList();
 	public static Scene menuFunc(){
 		
 		/*----------------------------------------------------------------------
@@ -42,6 +44,16 @@ public class MenuOp {
 		//BorderPane funcionario = new BorderPane();
 		
 		Menu menuJogos =new Menu("_Jogos");
+		
+		
+		
+		
+		/*----------------------------------------------------------------------
+		 *----                                                             -----
+		 *----           fUNCIONARIO - jogo - create                       -----
+		 *----                                                             ----- 
+		 *----------------------------------------------------------------------*/
+		
 		
 		MenuItem jogosAddFunc = new MenuItem("Adicionar Jogo");
 		
@@ -62,7 +74,7 @@ public class MenuOp {
 			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
 			
 			//Associar as colunas à tabela
-			tableAlunos.getColumns().addAll( colunaNome,colunaNumero);
+			tableAlunos.getColumns().addAll( colunaNumero,colunaNome);
 			
 			//Carregar a lista com dados
 			tableAlunos.setItems( carregarListaAlunos() );
@@ -97,7 +109,7 @@ public class MenuOp {
 						txtNumAluno.getText(),
 							txtNomeAluno.getText());
 							//new ImageView(new Image("/images/setor.jpg"))
-					
+					SQL.criarJogo(novoJogo);
 					tableAlunos.getItems().add(novoJogo);
 					
 					txtNumAluno.clear();
@@ -124,7 +136,11 @@ public class MenuOp {
 		
 		
 		
-		
+		/*----------------------------------------------------------------------
+		 *----                                                             -----
+		 *----                  fUNCIONARIO -  jogo - edit                 -----
+		 *----                                                             ----- 
+		 *----------------------------------------------------------------------*/
 		
 		
 		
@@ -182,7 +198,19 @@ public class MenuOp {
 					//TODO
 					//Se txtNumAluno não é número => ERRO
 					//Se txtNomeAluno não é texto => ERRO
-					
+					try
+				     {
+				      Jogos j = listaAlunos.get(tableAlunos.getSelectionModel().getSelectedIndex());
+				      j.setNome(txtNomeAluno.getText());
+				      j.setPreco(txtNumAluno.getText());
+				      listaAlunos.set(tableAlunos.getSelectionModel().getSelectedIndex(), j);
+				      tableAlunos.setItems(listaAlunos);
+				     }
+				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
+				     {
+				    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
+				     }
+					/*
 					Jogos novoJogo = new Jogos(
 						txtNumAluno.getText(),
 							txtNomeAluno.getText());
@@ -190,7 +218,8 @@ public class MenuOp {
 					
 					//tableAlunos.getItems().add(novoJogo);
 					tableAlunos.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
-					txtNumAluno.clear();
+					tableAlunos.getSelectionModel().getSelectedItem().setNome(txtNumAluno.getText());
+					*/txtNumAluno.clear();
 					txtNomeAluno.clear();
 				}
 				
@@ -216,10 +245,11 @@ public class MenuOp {
 		
 		
 		
-		
-		
-		
-		
+		/*----------------------------------------------------------------------
+		 *----                                                             -----
+		 *----                          fUNCIONARIO - jogo - delete        -----
+		 *----                                                             ----- 
+		 *----------------------------------------------------------------------*/
 		
 		
 		
@@ -294,8 +324,323 @@ public class MenuOp {
 		
 		Menu menuCliente = new Menu("C_liente");
 		MenuItem addCliente = new MenuItem("Adicionar Cliente");
+		
+		addCliente.setOnAction(e->{
+			GridPane grid = new GridPane();
+		    grid.setHgap(10);
+		    grid.setVgap(10);
+		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    TableColumn<Cliente, String> colunaNome = new TableColumn<>("Nome");
+			TableColumn<Cliente, String> colunaIdade = new TableColumn<>("Idade");
+			TableColumn<Cliente, String> colunaEmail = new TableColumn<>("Email");
+			TableColumn<Cliente, String> colunaTele = new TableColumn<>("Nº Telemovel");
+			TableColumn<Cliente, String> colunaUser = new TableColumn<>("username");
+			TableColumn<Cliente, String> colunaPass = new TableColumn<>("password");
+			
+			colunaNome.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+			//Nome do atributo, na ObservableList, onde vai ler os dados
+			colunaIdade.setMinWidth(100);	//Largura em pixeis da coluna
+			colunaIdade.setCellValueFactory(new PropertyValueFactory<>("Idade"));
+			//Coluna Numero
+			
+			colunaEmail.setMinWidth(200);
+			colunaEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
+			
+			colunaTele.setMinWidth(200);
+			colunaTele.setCellValueFactory(new PropertyValueFactory<>("NrTelemovel"));
+			
+			colunaUser.setMinWidth(200);
+			colunaUser.setCellValueFactory(new PropertyValueFactory<>("Username"));
+			
+			colunaPass.setMinWidth(200);
+			colunaPass.setCellValueFactory(new PropertyValueFactory<>("Password"));
+			
+			//Associar as colunas à tabela
+			tableCliente.getColumns().addAll( colunaNome,colunaIdade, colunaEmail, colunaTele, colunaUser, colunaPass );
+			
+			//Carregar a lista com dados
+			tableCliente.setItems( carregarListaCliente() );
+			
+			//Campo Nª
+			TextField txtNumAluno = new TextField();
+			txtNumAluno.setPromptText("Nome");
+			//txtNumAluno.setMinWidth(120);
+			txtNumAluno.setMaxWidth(120);
+			
+			//Campo Nome
+			TextField txtNomeAluno = new TextField();
+			txtNomeAluno.setPromptText("Idade");
+			//txtNomeAluno.setMinWidth(120);
+			txtNomeAluno.setMaxWidth(120);
+			
+			TextField txtNomeAutor = new TextField();
+			txtNomeAutor.setPromptText("email");
+			//txtNomeAluno.setMinWidth(120);
+			txtNomeAutor.setMaxWidth(200);
+			
+			TextField txtTele = new TextField();
+			txtTele.setPromptText("Telemovel");
+			//txtNomeAluno.setMinWidth(120);
+			txtTele.setMaxWidth(170);
+			
+			TextField txtUser = new TextField();
+			txtUser.setPromptText("User");
+			//txtNomeAluno.setMinWidth(120);
+			txtUser.setMaxWidth(120);
+			
+			TextField txtPass = new TextField();
+			txtPass.setPromptText("Pass");
+			//txtNomeAluno.setMinWidth(120);
+			txtPass.setMaxWidth(150);
+			
+			
+			//Botões para adicionar
+			Button btnAdd = new Button("Criar");	//Botão Adicionar
+			btnAdd.setOnAction(a -> {
+				/* Se um dos campos estiver vazio, emite msg
+				 * Caso contrário, passa os dados para o método addAluno()*/
+				
+				if(txtNumAluno.getText().isEmpty() || txtNomeAluno.getText().isEmpty()) {
+					MenuOp.alertBox("ERRO",  "Preencha os campos");
+				}
+				else {
+					//TODO
+					//Se txtNumAluno não é número => ERRO
+					//Se txtNomeAluno não é texto => ERRO
+					
+					Cliente novoCliente = new Cliente(
+							txtNomeAluno.getText(),
+							txtNumAluno.getText(),
+							txtNomeAutor.getText(),
+							txtTele.getText(),
+							txtUser.getText(),
+							txtPass.getText());
+							//new ImageView(new Image("/images/setor.jpg"))
+					SQL.criarCliente(novoCliente);
+					/*
+					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
+					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNumAluno.getText());
+					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNomeAutor.getText());*/
+					tableCliente.getItems().add(novoCliente);
+					
+					txtNumAluno.clear();
+					txtNomeAluno.clear();
+				}
+			});
+			
+			HBox layoutEdit = new HBox(10);
+			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
+			layoutEdit.getChildren().addAll(txtNumAluno, txtNomeAluno,txtNomeAutor,txtTele,txtUser,txtPass, btnAdd);
+			
+			//Arranjar verticalmente a Table e a HBox layoutEdit
+			VBox layoutSub = new VBox(10);
+			layoutSub.getChildren().addAll(tableCliente, layoutEdit);
+			
+			
+			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutSub, 4, 7);
+			
+			funcionario.setCenter(grid);
+			
+		});
 		MenuItem editClinete = new MenuItem("Alterar Cliente");
+		
+		editClinete.setOnAction(e->{
+			GridPane grid = new GridPane();
+		    grid.setHgap(10);
+		    grid.setVgap(10);
+		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    TableColumn<Cliente, String> colunaNome = new TableColumn<>("Nome");
+			TableColumn<Cliente, String> colunaIdade = new TableColumn<>("Idade");
+			TableColumn<Cliente, String> colunaEmail = new TableColumn<>("Email");
+			TableColumn<Cliente, String> colunaTele = new TableColumn<>("Nº Telemovel");
+			TableColumn<Cliente, String> colunaUser = new TableColumn<>("username");
+			TableColumn<Cliente, String> colunaPass = new TableColumn<>("password");
+			
+			colunaNome.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+			//Nome do atributo, na ObservableList, onde vai ler os dados
+			colunaIdade.setMinWidth(100);	//Largura em pixeis da coluna
+			colunaIdade.setCellValueFactory(new PropertyValueFactory<>("Idade"));
+			//Coluna Numero
+			
+			colunaEmail.setMinWidth(200);
+			colunaEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
+			
+			colunaTele.setMinWidth(200);
+			colunaTele.setCellValueFactory(new PropertyValueFactory<>("NrTelemovel"));
+			
+			colunaUser.setMinWidth(200);
+			colunaUser.setCellValueFactory(new PropertyValueFactory<>("Username"));
+			
+			colunaPass.setMinWidth(200);
+			colunaPass.setCellValueFactory(new PropertyValueFactory<>("Password"));
+			
+			//Associar as colunas à tabela
+			tableCliente.getColumns().addAll( colunaNome,colunaIdade, colunaEmail, colunaTele, colunaUser, colunaPass );
+			
+			//Carregar a lista com dados
+			tableCliente.setItems( carregarListaCliente() );
+			
+			//Campo Nª
+			TextField txtNumAluno = new TextField();
+			txtNumAluno.setPromptText("Nome");
+			//txtNumAluno.setMinWidth(120);
+			txtNumAluno.setMaxWidth(120);
+			
+			//Campo Nome
+			TextField txtNomeAluno = new TextField();
+			txtNomeAluno.setPromptText("Idade");
+			//txtNomeAluno.setMinWidth(120);
+			txtNomeAluno.setMaxWidth(120);
+			
+			TextField txtNomeAutor = new TextField();
+			txtNomeAutor.setPromptText("email");
+			//txtNomeAluno.setMinWidth(120);
+			txtNomeAutor.setMaxWidth(200);
+			
+			TextField txtTele = new TextField();
+			txtTele.setPromptText("Telemovel");
+			//txtNomeAluno.setMinWidth(120);
+			txtTele.setMaxWidth(170);
+			
+			TextField txtUser = new TextField();
+			txtUser.setPromptText("User");
+			//txtNomeAluno.setMinWidth(120);
+			txtUser.setMaxWidth(120);
+			
+			TextField txtPass = new TextField();
+			txtPass.setPromptText("Pass");
+			//txtNomeAluno.setMinWidth(120);
+			txtPass.setMaxWidth(150);
+			
+			
+			//Botões para adicionar
+			Button btnAdd = new Button("ALterar");	//Botão Adicionar
+			btnAdd.setOnAction(a -> {
+				/* Se um dos campos estiver vazio, emite msg
+				 * Caso contrário, passa os dados para o método addAluno()*/
+				
+				if(txtNumAluno.getText().isEmpty() || txtNomeAluno.getText().isEmpty()) {
+					MenuOp.alertBox("ERRO",  "Preencha os campos");
+				}
+				else {
+					//TODO
+					//Se txtNumAluno não é número => ERRO
+					//Se txtNomeAluno não é texto => ERRO
+					
+					try
+				     {
+						Cliente j = new Cliente(txtNumAluno.getText(),txtNomeAluno.getText(),txtNomeAutor.getText(),txtTele.getText(),txtUser.getText(),txtPass.getText());
+				      //Cliente j = listaCliente.get(tableCliente.getSelectionModel().getSelectedIndex());
+				      j.setNome(txtNumAluno.getText());
+				      j.setIdade(txtNomeAluno.getText());
+				      j.setEmail(txtNomeAutor.getText());
+				      j.setNrTelemovel(txtTele.getText());
+				      j.setUsername(txtUser.getText());
+				      j.setPassword(txtPass.getText());
+				      
+				      SQL.alterCliente(j, listaCliente.get(tableCliente.getSelectionModel().getSelectedIndex()));
+				      
+				      listaCliente.set(tableCliente.getSelectionModel().getSelectedIndex(), j);
+				      tableCliente.setItems(listaCliente);
+				     }
+				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
+				     {
+				    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
+				     }
+					txtNumAluno.clear();
+					txtNomeAluno.clear();
+				}
+			});
+			
+			HBox layoutEdit = new HBox(10);
+			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
+			layoutEdit.getChildren().addAll(txtNumAluno, txtNomeAluno,txtNomeAutor,txtTele,txtUser,txtPass, btnAdd);
+			
+			//Arranjar verticalmente a Table e a HBox layoutEdit
+			VBox layoutSub = new VBox(10);
+			layoutSub.getChildren().addAll(tableCliente, layoutEdit);
+			
+			
+			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutSub, 4, 7);
+			
+			funcionario.setCenter(grid);
+			
+		});
 		MenuItem deleteCliente = new MenuItem("Eliminar Cliente");
+		deleteCliente.setOnAction(e->{
+			GridPane grid = new GridPane();
+		    grid.setHgap(10);
+		    grid.setVgap(10);
+		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    TableColumn<Cliente, String> colunaNome = new TableColumn<>("Nome");
+			TableColumn<Cliente, String> colunaIdade = new TableColumn<>("Idade");
+			TableColumn<Cliente, String> colunaEmail = new TableColumn<>("Email");
+			TableColumn<Cliente, String> colunaTele = new TableColumn<>("Nº Telemovel");
+			TableColumn<Cliente, String> colunaUser = new TableColumn<>("username");
+			TableColumn<Cliente, String> colunaPass = new TableColumn<>("password");
+			
+			colunaNome.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+			//Nome do atributo, na ObservableList, onde vai ler os dados
+			colunaIdade.setMinWidth(100);	//Largura em pixeis da coluna
+			colunaIdade.setCellValueFactory(new PropertyValueFactory<>("Idade"));
+			//Coluna Numero
+			
+			colunaEmail.setMinWidth(200);
+			colunaEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
+			
+			colunaTele.setMinWidth(200);
+			colunaTele.setCellValueFactory(new PropertyValueFactory<>("NrTelemovel"));
+			
+			colunaUser.setMinWidth(200);
+			colunaUser.setCellValueFactory(new PropertyValueFactory<>("Username"));
+			
+			colunaPass.setMinWidth(200);
+			colunaPass.setCellValueFactory(new PropertyValueFactory<>("Password"));
+			
+			//Associar as colunas à tabela
+			tableCliente.getColumns().addAll( colunaNome,colunaIdade, colunaEmail, colunaTele, colunaUser, colunaPass );
+			
+			//Carregar a lista com dados
+			tableCliente.setItems( carregarListaCliente() );
+			
+			
+			//Botões para adicionar
+			Button btnAdd = new Button("Eliminar");	//Botão Adicionar
+			btnAdd.setOnAction(a -> {
+				try
+			     {
+					ObservableList<Cliente> alunoSelected, listaAlunos;
+					listaAlunos = tableCliente.getItems();
+					alunoSelected = tableCliente.getSelectionModel().getSelectedItems();
+					SQL.deleteCliente(listaCliente.get(tableCliente.getSelectionModel().getSelectedIndex()));
+					alunoSelected.forEach(listaAlunos::remove);
+			     }
+			     catch(java.lang.ArrayIndexOutOfBoundsException erro)
+			     {
+			    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
+			     }
+			});
+			
+			HBox layoutEdit = new HBox(10);
+			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
+			layoutEdit.getChildren().addAll(btnAdd);
+			
+			//Arranjar verticalmente a Table e a HBox layoutEdit
+			VBox layoutSub = new VBox(10);
+			layoutSub.getChildren().addAll(tableCliente, layoutEdit);
+			
+			
+			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutSub, 4, 7);
+			
+			funcionario.setCenter(grid);
+			
+		});
 		
 		menuCliente.getItems().addAll(addCliente, editClinete, deleteCliente);
 		
@@ -374,7 +719,11 @@ public class MenuOp {
 							txtNomeAluno.getText(),
 							txtNomeAutor.getText());
 							//new ImageView(new Image("/images/setor.jpg"))
-					
+					SQL.criarEnc(novoJogo);
+					/*
+					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
+					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNumAluno.getText());
+					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNomeAutor.getText());*/
 					tableEnc.getItems().add(novoJogo);
 					
 					txtNumAluno.clear();
@@ -399,13 +748,186 @@ public class MenuOp {
 		});
 		
 		MenuItem alterarEncFunc = new MenuItem("Alterar uma Encomenda");
+		
+		alterarEncFunc.setOnAction(e->{
+			GridPane grid = new GridPane();
+		    grid.setHgap(10);
+		    grid.setVgap(10);
+		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
+			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço");
+			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
+			
+			
+			colunaNome.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+			//Nome do atributo, na ObservableList, onde vai ler os dados
+			colunaQuem.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaQuem.setCellValueFactory(new PropertyValueFactory<>("autor"));
+			//Coluna Numero
+			
+			colunaNumero.setMinWidth(200);
+			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
+			
+			//Associar as colunas à tabela
+			tableEnc.getColumns().addAll( colunaNome,colunaNumero, colunaQuem);
+			
+			//Carregar a lista com dados
+			tableEnc.setItems( carregarListaEncomendas() );
+			
+			//Campo Nª
+			TextField txtNumAluno = new TextField();
+			txtNumAluno.setPromptText("Preço");
+			txtNumAluno.setMinWidth(120);
+			txtNumAluno.setMaxWidth(120);
+			
+			//Campo Nome
+			TextField txtNomeAluno = new TextField();
+			txtNomeAluno.setPromptText("Nome");
+			//txtNomeAluno.setMinWidth(120);
+			txtNomeAluno.setMaxWidth(120);
+			
+			TextField txtNomeAutor = new TextField();
+			txtNomeAutor.setPromptText("Autor");
+			//txtNomeAluno.setMinWidth(120);
+			txtNomeAutor.setMaxWidth(120);
+			
+			
+			//Botões para adicionar
+			Button btnAdd = new Button("Encomendar");	//Botão Adicionar
+			btnAdd.setOnAction(a -> {
+				/* Se um dos campos estiver vazio, emite msg
+				 * Caso contrário, passa os dados para o método addAluno()*/
+				
+				if(txtNumAluno.getText().isEmpty() || txtNomeAluno.getText().isEmpty()) {
+					MenuOp.alertBox("ERRO",  "Preencha os campos");
+				}
+				else {
+					//TODO
+					//Se txtNumAluno não é número => ERRO
+					//Se txtNomeAluno não é texto => ERRO
+					
+					try
+				     {
+				      //Encomendas j = listaEnc.get(tableEnc.getSelectionModel().getSelectedIndex());
+					  Encomendas j = new Encomendas(txtNumAluno.getText(),txtNomeAluno.getText(),txtNomeAutor.getText());
+				      j.setNome(txtNomeAluno.getText());
+				      j.setPreco(txtNumAluno.getText());
+				      j.setAutor(txtNomeAutor.getText());
+				        
+				      System.out.println(j.getNome() + " " +listaEnc.get(tableEnc.getSelectionModel().getSelectedIndex()).getNome() );
+				      SQL.alterEnc(j, listaEnc.get(tableEnc.getSelectionModel().getSelectedIndex()));
+				      listaEnc.set(tableEnc.getSelectionModel().getSelectedIndex(), j);
+				      
+				      tableEnc.setItems(listaEnc);
+				      
+
+				     }
+				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
+				     {
+				    	 erro.printStackTrace();
+				    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
+				     }
+					txtNumAluno.clear();
+					txtNomeAluno.clear();
+				}
+			});
+			
+			HBox layoutEdit = new HBox(10);
+			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
+			layoutEdit.getChildren().addAll(txtNumAluno, txtNomeAluno,txtNomeAutor, btnAdd);
+			
+			//Arranjar verticalmente a Table e a HBox layoutEdit
+			VBox layoutSub = new VBox(10);
+			layoutSub.getChildren().addAll(tableEnc, layoutEdit);
+			
+			
+			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutSub, 4, 7);
+			
+			funcionario.setCenter(grid);
+		});
+		
 		MenuItem eliminarEncFunc = new MenuItem("Eliminar uma Encomenda");
+		
+		eliminarEncFunc.setOnAction(e->{
+			GridPane grid = new GridPane();
+		    grid.setHgap(10);
+		    grid.setVgap(10);
+		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
+			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço");
+			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
+			
+			
+			colunaNome.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+			//Nome do atributo, na ObservableList, onde vai ler os dados
+			colunaQuem.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaQuem.setCellValueFactory(new PropertyValueFactory<>("autor"));
+			//Coluna Numero
+			
+			colunaNumero.setMinWidth(200);
+			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
+			
+			//Associar as colunas à tabela
+			tableEnc.getColumns().addAll( colunaNome,colunaNumero, colunaQuem);
+			
+			//Carregar a lista com dados
+			tableEnc.setItems( carregarListaEncomendas() );
+			
+			//Campo Nª
+			TextField txtNumAluno = new TextField();
+			txtNumAluno.setPromptText("Preço");
+			txtNumAluno.setMinWidth(120);
+			txtNumAluno.setMaxWidth(120);
+			
+			//Campo Nome
+			TextField txtNomeAluno = new TextField();
+			txtNomeAluno.setPromptText("Nome");
+			//txtNomeAluno.setMinWidth(120);
+			txtNomeAluno.setMaxWidth(120);
+			
+			TextField txtNomeAutor = new TextField();
+			txtNomeAutor.setPromptText("Autor");
+			//txtNomeAluno.setMinWidth(120);
+			txtNomeAutor.setMaxWidth(120);
+			
+			
+			Button btnDel = new Button("Apagar");
+			btnDel.setOnAction(d -> {
+				//Vamos apanhar o item selecionado e compara-lo com a lista de Alunos
+				
+				ObservableList<Encomendas> alunoSelected, listaAlunos;
+				listaAlunos = tableEnc.getItems();
+				alunoSelected = tableEnc.getSelectionModel().getSelectedItems();
+				SQL.deleteEnc(listaEnc.get(tableEnc.getSelectionModel().getSelectedIndex()));
+				alunoSelected.forEach(listaAlunos::remove);
+			});
+			
+			HBox layoutEdit = new HBox(10);
+			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
+			layoutEdit.getChildren().addAll( btnDel);
+			
+			//Arranjar verticalmente a Table e a HBox layoutEdit
+			VBox layoutSub = new VBox(10);
+			layoutSub.getChildren().addAll(tableEnc, layoutEdit);
+			
+			
+			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutSub, 4, 7);
+			
+			funcionario.setCenter(grid);
+			
+		});
 		
 		menuEncomendas.getItems().addAll(fazerEncFunc, alterarEncFunc, eliminarEncFunc);
 		
 		Menu menuSaida = new Menu("S_air");
 		MenuItem sairFunc = new MenuItem("Fechar Programa");
 		MenuItem terminarSessaoFunc = new MenuItem("Terminar Sessão");
+
+		
 		
 		menuSaida.getItems().addAll(sairFunc, terminarSessaoFunc);
 		//Passo 3
@@ -416,7 +938,7 @@ public class MenuOp {
 		
 		
 		
-		Scene sceneFuncionario = new Scene(funcionario,700,700);
+		Scene sceneFuncionario = new Scene(funcionario,1250,1000);
 		funcionario.setStyle("-fx-text-fill: #FFFFFF;-fx-font-size: 13pt;-fx-background-color: #1A0A00;");
 		funcionario.setTop(menuBar);
 
@@ -474,7 +996,7 @@ public class MenuOp {
 		//cliente
 		
 		cliente.setStyle("-fx-text-fill: #FFFFFF;-fx-font-size: 13pt;-fx-background-color: #00004C;");
-		Scene sceneCliente = new Scene(cliente,700,700);
+		Scene sceneCliente = new Scene(cliente,1250,1000);
 		cliente.setTop(menuBarCliente);
 		
 		terminarSessaoFunc.setOnAction(e ->{
@@ -552,15 +1074,21 @@ public class MenuOp {
 		
 		private static ObservableList<Jogos> carregarListaAlunos() {
 			// TODO Auto-generated method stub
-			
-			
+			listaAlunos = SQL.dadosRecebe("SELECT * FROM `gestao de jogos` WHERE 1");
 			return listaAlunos;
 		}
 		
 		private static ObservableList<Encomendas> carregarListaEncomendas() {
 			// TODO Auto-generated method stub
 			
-			
+			listaEnc = SQL.dadosRecebeEnc("SELECT * FROM `encomendas` WHERE 1");
 			return listaEnc;
+		}
+		
+		private static ObservableList<Cliente> carregarListaCliente() {
+			// TODO Auto-generated method stub
+			
+			listaCliente = SQL.dadosRecebeCliente("SELECT * FROM `gestao de clientes` WHERE 1");
+			return listaCliente;
 		}
 }

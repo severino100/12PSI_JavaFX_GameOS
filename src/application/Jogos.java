@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 public class Jogos {
 	private String nome;
 	private String preco;
-	private String autor;
+	//private String autor;
 	
 
 	public Jogos(String preco, String nome)
@@ -15,11 +15,11 @@ public class Jogos {
 		//this.autor = autor;
 	}
 	
-	public void Jogos(String preco, String nome, String autor)
+	public void Jogos(String preco, String nome)
 	{
 		this.preco = preco;
 		this.nome = nome;
-		this.autor = autor;
+		//this.autor = autor;
 	}
 
 	public String getNome() {
@@ -38,11 +38,11 @@ public class Jogos {
 		this.preco = preco;
 	}
 
-	public String getAutor() {
+	/*public String getAutor() {
 		return autor;
 	}
 
 	public void setAutor(String autor) {
 		this.autor = autor;
-	}
+	}*/
 }

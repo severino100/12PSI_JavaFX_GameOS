@@ -49,7 +49,6 @@ public class Main extends Application {
 			btnCancel.setStyle("-fx-text-fill: #FFFFFF;-fx-font-size: 13pt;;-fx-background-color: #00004C;");
 			grid.add(btnCancel, 3, 3);
 			
-			
 			/*GridPane gridFuncionario = new GridPane();
 			gridFuncionario.setHgap(10);
 			gridFuncionario.setVgap(10);
@@ -63,26 +62,38 @@ public class Main extends Application {
 			
 			
 			btnOK.setOnAction(e -> {
+				
+				//primaryStage.setScene(MenuOp.menuFunc());
+				
+				
 				if(new String("ruben").equals(usernameField.getText()))
 				{
-					if(new String("david").equals(passwordfield.getText()))
+					if(new String("1234").equals(passwordfield.getText()))
 					{
 						primaryStage.setScene(MenuOp.menuFunc());
 				
 					}
 				}
-				else{
+				else
+				{
+					if(SQL.verificarLogin(usernameField.getText(), passwordfield.getText()))
+					{
+						primaryStage.setScene(MenuOp.menuCliente());
+					}
+					else{
+						MenuOp.alertBox("ATENCAO", "User ou Pass errados");
+					}
+					/*
 					if(new String("david").equals(usernameField.getText()))
 					{
 						if(new String("david").equals(passwordfield.getText()))
 						{
-							primaryStage.setScene(MenuOp.menuCliente());
 					
 						}
 					}
 					else{
 						MenuOp.alertBox("ATENCAO", "User ou Pass errados");
-					}
+					}*/
 				}
 				
 				
