@@ -317,6 +317,92 @@ public class SQL {
 		
 
     }
+	public static void alterJogo(Jogos jogo, Jogos jogo2){
+		
+		String query = "UPDATE `gestao de jogos` SET `NomeJogo`=\""
+				+ jogo.getNome() + "\",`Preco`="
+				+ jogo.getPreco() +  " WHERE NomeJogo=\""
+				+ jogo2.getNome() + "\" AND Preco="
+				+ jogo2.getPreco();
+		
+		System.out.println(query);
+		try{
+			//Tenta ligar-se ao SGBD e à base de dados
+			Class.forName(MYSQL_JDBC_DRIVER).newInstance();
+			conn = DriverManager.getConnection(MYSQL_DB_URL, MYSQL_DB_USER, MYSQL_DB_PASS );
+			if(msgON){
+				MenuOp.alertBox("layoutLeft", "Base dados aberta");
+			}
+		}
+		catch(SQLException ex){							// Apanha Erro da connection ou DML
+			MenuOp.alertBox("layoutLeft", "Erro na ligação");
+		}
+		catch(ClassNotFoundException ex){				// Apanha Erro da Class.forName()
+			MenuOp.alertBox("layoutLeft", "Erro no Driver");
+		}
+		catch(Exception ex){								// Apanha todas as restantes Exceções
+			MenuOp.alertBox("layoutLeft", "Erro genérico na ligação");
+			ex.printStackTrace();
+		}
+		finally{
+			try{
+				// Se ligação com sucesso, executa a query
+				if(!query.isEmpty()){		// Se a query tiver comando sql
+					Statement stmt = conn.createStatement();
+					stmt.executeUpdate(query);
+
+				}		
+				shutdownConnection();
+			}
+			catch(SQLException ex){							// Apanha Erro da connection ou DML
+				MenuOp.alertBox("Finally", "Erro na ligação");
+				ex.printStackTrace();
+				shutdownConnection();
+			}				
+		}
+	}
+	
+	public static void deleteJogo(Jogos jogo){
+		
+		String query = "DELETE FROM `gestao de jogos` WHERE "
+				+ "NomeJogo = \"" + jogo.getNome() +"\" AND Preco="+ jogo.getPreco() ;
+		
+		System.out.println(query);
+		try{
+			//Tenta ligar-se ao SGBD e à base de dados
+			Class.forName(MYSQL_JDBC_DRIVER).newInstance();
+			conn = DriverManager.getConnection(MYSQL_DB_URL, MYSQL_DB_USER, MYSQL_DB_PASS );
+			if(msgON){
+				MenuOp.alertBox("layoutLeft", "Base dados aberta");
+			}
+		}
+		catch(SQLException ex){							// Apanha Erro da connection ou DML
+			MenuOp.alertBox("layoutLeft", "Erro na ligação");
+		}
+		catch(ClassNotFoundException ex){				// Apanha Erro da Class.forName()
+			MenuOp.alertBox("layoutLeft", "Erro no Driver");
+		}
+		catch(Exception ex){								// Apanha todas as restantes Exceções
+			MenuOp.alertBox("layoutLeft", "Erro genérico na ligação");
+			ex.printStackTrace();
+		}
+		finally{
+			try{
+				// Se ligação com sucesso, executa a query
+				if(!query.isEmpty()){		// Se a query tiver comando sql
+					Statement stmt = conn.createStatement();
+					stmt.executeUpdate(query);
+
+				}		
+				shutdownConnection();
+			}
+			catch(SQLException ex){							// Apanha Erro da connection ou DML
+				MenuOp.alertBox("Finally", "Erro na ligação");
+				ex.printStackTrace();
+				shutdownConnection();
+			}				
+		}
+    }
 	
 	// Executa uma query à base de dados de um SGBD MySQL
 	//SELECT * FROM `gestao de jogos` WHERE 1
@@ -491,10 +577,13 @@ public class SQL {
 		public static void alterEnc(Encomendas enc, Encomendas enc2){
 			
 			String query = "UPDATE `encomendas` SET `Nome`=" 
-			+ "\"" + enc.getNome() +"\",`Preco`="+ enc.getPreco() 
-			+ "," + "`Autor`= \""+ enc.getAutor()+ "\" WHERE "
-					+ "Nome = \"" + enc2.getNome() +"\" AND Preco="+ enc2.getPreco() 
-					+ " AND " + "Autor= \""+ enc2.getAutor() +"\"";
+			+ "\"" + enc.getNome() 
+			+"\",`Preco`="+ enc.getPreco() 
+			+ "," + "`Autor`= \""
+			+ enc.getAutor()+ "\" WHERE "
+			+ "Nome = \"" + enc2.getNome() 
+			+"\" AND Preco="+ enc2.getPreco() 
+			+ " AND " + "Autor= \""+ enc2.getAutor() +"\"";
 			
 			System.out.println(query);
 			try{

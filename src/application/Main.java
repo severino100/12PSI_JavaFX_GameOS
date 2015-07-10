@@ -73,6 +73,10 @@ public class Main extends Application {
 						primaryStage.setScene(MenuOp.menuFunc());
 				
 					}
+					else
+					{
+						MenuOp.alertBox("ATENCAO", "User ou Pass errados");
+					}
 				}
 				else
 				{
