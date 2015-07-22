@@ -65,7 +65,7 @@ public class MenuOp {
 		    grid.setVgap(10);
 		    grid.setPadding(new Insets(50, 50, 50, 50));
 		    TableColumn<Jogos, String> colunaNome = new TableColumn<>("Nome");
-			TableColumn<Jogos, String> colunaNumero = new TableColumn<>("Preço");
+			TableColumn<Jogos, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			colunaNome.setMinWidth(550);	//Largura em pixeis da coluna
 			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 			//Nome do atributo, na ObservableList, onde vai ler os dados
@@ -84,14 +84,14 @@ public class MenuOp {
 			//Campo Nª
 			TextField txtNumAluno = new TextField();
 			txtNumAluno.setPromptText("Preço");
-			txtNumAluno.setMinWidth(120);
-			txtNumAluno.setMaxWidth(120);
+			txtNumAluno.setMinWidth(300);
+			//txtNumAluno.setMaxWidth(120);
 			
 			//Campo Nome
 			TextField txtNomeAluno = new TextField();
 			txtNomeAluno.setPromptText("Nome");
-			//txtNomeAluno.setMinWidth(120);
-			txtNomeAluno.setMaxWidth(120);
+			txtNomeAluno.setMinWidth(300);
+			//txtNomeAluno.setMaxWidth(120);
 			
 			//Botões para adicionar
 			Button btnAdd = new Button("Adicionar");	//Botão Adicionar
@@ -157,7 +157,7 @@ public class MenuOp {
 		    
 		    
 		    TableColumn<Jogos, String> colunaNome = new TableColumn<>("Nome");
-			TableColumn<Jogos, String> colunaNumero = new TableColumn<>("Preço");
+			TableColumn<Jogos, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			
 			
 			colunaNome.setMinWidth(300);	//Largura em pixeis da coluna
@@ -178,14 +178,14 @@ public class MenuOp {
 			//Campo Nª
 			TextField txtNumAluno = new TextField();
 			txtNumAluno.setPromptText("Preço");
-			txtNumAluno.setMinWidth(120);
-			txtNumAluno.setMaxWidth(120);
+			txtNumAluno.setMinWidth(300);
+			//txtNumAluno.setMaxWidth(120);
 			
 			//Campo Nome
 			TextField txtNomeAluno = new TextField();
 			txtNomeAluno.setPromptText("Nome");
-			//txtNomeAluno.setMinWidth(120);
-			txtNomeAluno.setMaxWidth(120);
+			txtNomeAluno.setMinWidth(300);
+			//txtNomeAluno.setMaxWidth(120);
 			
 			//Botões para adicionar
 			Button btnAdd = new Button("Alterar");	//Botão Adicionar
@@ -275,23 +275,21 @@ public class MenuOp {
 		MenuItem jogosDeleteFunc = new MenuItem("Eliminar Jogo");		
 		
 		jogosDeleteFunc.setOnAction(e->{
-			BorderPane fdssf = new BorderPane();
 			
 			GridPane grid = new GridPane();
-			fdssf.setCenter(grid);
 		    grid.setHgap(10);
 		    grid.setVgap(10);
 		    grid.setPadding(new Insets(50, 50, 50, 50));
 			
 		    TableColumn<Jogos, String> colunaNome = new TableColumn<>("Nome");
-			TableColumn<Jogos, String> colunaNumero = new TableColumn<>("Preço");
+			TableColumn<Jogos, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			colunaNome.setMinWidth(300);	//Largura em pixeis da coluna
 			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 			//Nome do atributo, na ObservableList, onde vai ler os dados
 			
 			//Coluna Numero
 			
-			colunaNumero.setMinWidth(100);
+			colunaNumero.setMinWidth(300);
 			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
 			
 			//Associar as colunas à tabela
@@ -325,7 +323,7 @@ public class MenuOp {
 			grid.add(layoutEdit, 4, 6);
 			grid.add(layoutSub, 4, 7);
 			
-			//funcionario.setCenter(fdssf);
+			funcionario.setCenter(grid);
 		});
 		
 		menuJogos.getItems().addAll(jogosAddFunc, jogosEditFunc, jogosDeleteFunc);
@@ -675,7 +673,7 @@ public class MenuOp {
 		    grid.setVgap(10);
 		    grid.setPadding(new Insets(50, 50, 50, 50));
 		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
-			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço");
+			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
 			
 			
@@ -769,7 +767,7 @@ public class MenuOp {
 		    grid.setVgap(10);
 		    grid.setPadding(new Insets(50, 50, 50, 50));
 		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
-			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço");
+			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
 			
 			
@@ -871,7 +869,7 @@ public class MenuOp {
 		    grid.setVgap(10);
 		    grid.setPadding(new Insets(50, 50, 50, 50));
 		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
-			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço");
+			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
 			
 			
@@ -975,7 +973,7 @@ public class MenuOp {
 		    grid.setVgap(10);
 		    grid.setPadding(new Insets(50, 50, 50, 50));
 		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
-			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço");
+			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
 			
 			
@@ -1068,7 +1066,7 @@ public class MenuOp {
 		    grid.setVgap(10);
 		    grid.setPadding(new Insets(50, 50, 50, 50));
 		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
-			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço");
+			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
 			
 			
@@ -1169,7 +1167,7 @@ public class MenuOp {
 		    grid.setVgap(10);
 		    grid.setPadding(new Insets(50, 50, 50, 50));
 		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
-			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço");
+			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
 			
 			

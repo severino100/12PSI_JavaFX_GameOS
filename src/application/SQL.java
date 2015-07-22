@@ -26,7 +26,7 @@ public class SQL {
 	static String SQLSERVER_DB_USER = "sa";								// BD user name SQLSERVER
 	static String SQLSERVER_DB_PASS = "123";							// BD password SQLSERVER
 	
-	static boolean msgON = true;										// Ativa Mensagens de controlo
+	static boolean msgON = false;										// Ativa Mensagens de controlo
 	
 	/* mySqlTeste()- Cria e testa uma ligação a um SGBD MYSQL.*/
 	public static void mySqlTeste(){
