@@ -63,7 +63,7 @@ public class Main extends Application {
 			
 			btnOK.setOnAction(e -> {
 				
-				//primaryStage.setScene(MenuOp.menuFunc());
+				primaryStage.setScene(MenuOp.menuFunc());
 				
 				
 				if(new String("ruben").equals(usernameField.getText()))

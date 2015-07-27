@@ -26,16 +26,24 @@ import javafx.stage.Stage;
 public class MenuOp {
 	
 	static boolean resposta;
+	static Stage edit = new Stage();
+	
 	static BorderPane funcionario = new BorderPane();
 	static BorderPane cliente = new BorderPane();
 	static TableView<Jogos> tableAlunos = new TableView<>();
 	static ObservableList<Jogos> listaAlunos = FXCollections.observableArrayList();
+	static VBox layoutAlunos = new VBox(); 
+	static Scene alunosScene = new Scene(layoutAlunos);
 	
 	static TableView<Encomendas> tableEnc = new TableView<>();
 	static ObservableList<Encomendas> listaEnc = FXCollections.observableArrayList();
+	static BorderPane layoutEnc = new BorderPane(); 
+	static Scene encScene = new Scene(layoutEnc);
 	
 	static TableView<Cliente> tableCliente = new TableView<>();
 	static ObservableList<Cliente> listaCliente = FXCollections.observableArrayList();
+	static BorderPane layoutCliente = new BorderPane(); 
+	static Scene clienteScene = new Scene(layoutCliente);
 	
 	
 	public static Scene menuFunc(){
@@ -60,6 +68,19 @@ public class MenuOp {
 		MenuItem jogosAddFunc = new MenuItem("Adicionar Jogo");
 		
 		jogosAddFunc.setOnAction(e->{
+			
+			edit.setScene(alunosScene);
+			edit.setHeight(150);
+			edit.setWidth(400);
+			edit.setMaxHeight(150);
+			edit.setMaxWidth(400);
+			edit.setMinHeight(150);
+			edit.setMinWidth(400);
+			
+			edit.show();
+			
+			
+			
 			GridPane grid = new GridPane();
 		    grid.setHgap(10);
 		    grid.setVgap(10);
@@ -96,40 +117,65 @@ public class MenuOp {
 			//Botões para adicionar
 			Button btnAdd = new Button("Adicionar");	//Botão Adicionar
 			btnAdd.setOnAction(a -> {
+				
 				/* Se um dos campos estiver vazio, emite msg
 				 * Caso contrário, passa os dados para o método addAluno()*/
+		
 				
 				if(txtNumAluno.getText().isEmpty() || txtNomeAluno.getText().isEmpty()) {
 					MenuOp.alertBox("ERRO",  "Preencha os campos");
 				}
 				else {
-					//TODO
-					//Se txtNumAluno não é número => ERRO
-					//Se txtNomeAluno não é texto => ERRO
-					
-					Jogos novoJogo = new Jogos(
-						txtNumAluno.getText(),
-							txtNomeAluno.getText());
-							//new ImageView(new Image("/images/setor.jpg"))
-					SQL.criarJogo(novoJogo);
-					tableAlunos.getItems().add(novoJogo);
-					
-					txtNumAluno.clear();
-					txtNomeAluno.clear();
+					if(!txtNumAluno.getText().matches("[0-9]+"))
+					{
+						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+					}
+					else
+					{
+						//TODO
+						//Se txtNumAluno não é número => ERRO
+						//Se txtNomeAluno não é texto => ERRO
+						
+						Jogos novoJogo = new Jogos(
+							txtNumAluno.getText(),
+								txtNomeAluno.getText());
+								//new ImageView(new Image("/images/setor.jpg"))
+						SQL.criarJogo(novoJogo);
+						tableAlunos.getItems().add(novoJogo);
+						
+						txtNumAluno.clear();
+						txtNomeAluno.clear();
+						edit.close();
+					}
 				}
+				
 			});
-			
+			Button btnAdd2 = new Button("Adicionar mais");	//Botão Adicionar
+			btnAdd2.setOnAction(a -> {
+				edit.show();
+			});
+			/*
 			HBox layoutEdit = new HBox(10);
 			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
-			layoutEdit.getChildren().addAll(txtNumAluno, txtNomeAluno, btnAdd);
+			layoutEdit.getChildren().addAll(txtNumAluno, txtNomeAluno, btnAdd);*/
 			
+			HBox linhaNome = new HBox();
+			linhaNome.getChildren().addAll(new Label("Preco Jogo: "),txtNumAluno); 
+			linhaNome.setPadding(new Insets(5, 5, 5, 5));
+			HBox linhaPreco = new HBox();
+			linhaPreco.setPadding(new Insets(5, 5, 5, 5));
+			linhaPreco.getChildren().addAll(new Label("Nome Jogo: "),txtNomeAluno); 
+			layoutAlunos.getChildren().clear();
+			layoutAlunos.getChildren().addAll(linhaNome, linhaPreco, btnAdd);
 			//Arranjar verticalmente a Table e a HBox layoutEdit
 			VBox layoutSub = new VBox(10);
-			layoutSub.getChildren().addAll(tableAlunos, layoutEdit);
+			layoutAlunos.setAlignment(Pos.CENTER);
+			layoutSub.getChildren().addAll(tableAlunos);
 			
 			
-			grid.add(layoutEdit, 4, 6);
+			//grid.add(layoutEdit, 4, 6);
 			grid.add(layoutSub, 4, 7);
+			grid.add(btnAdd2, 4, 8);
 			
 			funcionario.setCenter(grid);
 			
@@ -1332,4 +1378,6 @@ public class MenuOp {
 			listaCliente = SQL.dadosRecebeCliente("SELECT * FROM `gestao de clientes` WHERE 1");
 			return listaCliente;
 		}
+		
+
 }
