@@ -11,6 +11,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,10 +31,10 @@ public class MenuOp {
 	
 	static BorderPane funcionario = new BorderPane();
 	static BorderPane cliente = new BorderPane();
-	static TableView<Jogos> tableAlunos = new TableView<>();
-	static ObservableList<Jogos> listaAlunos = FXCollections.observableArrayList();
-	static VBox layoutAlunos = new VBox(); 
-	static Scene alunosScene = new Scene(layoutAlunos);
+	static TableView<Jogos> tableJogos = new TableView<>();
+	static ObservableList<Jogos> listaJogos = FXCollections.observableArrayList();
+	static VBox layoutJogos = new VBox(); 
+	static Scene jogosScene = new Scene(layoutJogos);
 	
 	static TableView<Encomendas> tableEnc = new TableView<>();
 	static ObservableList<Encomendas> listaEnc = FXCollections.observableArrayList();
@@ -47,7 +48,134 @@ public class MenuOp {
 	
 	
 	public static Scene menuFunc(){
-		
+
+	    tableJogos.setRowFactory( tv -> {
+	        TableRow<Jogos> row = new TableRow<>();
+	        row.setOnMouseClicked(event -> {
+	            if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+	                Jogos clicado = row.getItem(); //Clicado
+	                //MenuOp.alertBox("",rowData.getNome());
+	            	edit.setScene(jogosScene);
+	    			edit.setHeight(150);
+	    			edit.setWidth(400);
+	    			edit.setMaxHeight(150);
+	    			edit.setMaxWidth(400);
+	    			edit.setMinHeight(150);
+	    			edit.setMinWidth(400);
+	    			edit.setTitle("Alter");
+	    			layoutJogos.setStyle("-fx-background-color: #808080");
+	    			
+	                edit.show();
+	                
+	              //Campo Nª
+	    			TextField txtNumAluno = new TextField();
+	    			txtNumAluno.setPromptText("Preço");
+	    			txtNumAluno.setMinWidth(300);
+	    			//txtNumAluno.setMaxWidth(120);
+	    			
+	    			//Campo Nome
+	    			TextField txtNomeAluno = new TextField();
+	    			txtNomeAluno.setPromptText("Nome");
+	    			txtNomeAluno.setMinWidth(300);
+	    			//txtNomeAluno.setMaxWidth(120);
+	    			
+	    			
+	    			//Botões para adicionar
+	    			Button btnAdd = new Button("Alterar");	//Botão Adicionar
+	    			btnAdd.setStyle("-fx-font-size: 13pt;"
+	    					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+	    					+ "linear-gradient(#20262b, #191d22),"
+	    					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+	    					+ "rgba(255,255,255,0));"
+	    					+ "-fx-background-radius: 5,4,3,5;"
+	    					+ "-fx-background-insets: 0,1,2,0;"
+	    					+ "-fx-text-fill: white;"
+	    					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+	    					+ "-fx-font-family: \"Arial\";"
+	    					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+	    					+ "-fx-font-size: 12px;"
+	    					+ "-fx-padding: 10 20 10 20;");
+	    			HBox linhaNome = new HBox();
+					linhaNome.getChildren().addAll(new Label("Preco Jogo: "),txtNumAluno); 
+					linhaNome.setPadding(new Insets(5, 5, 5, 5));
+					HBox linhaPreco = new HBox();
+					linhaPreco.setPadding(new Insets(5, 5, 5, 5));
+					linhaPreco.getChildren().addAll(new Label("Nome Jogo: "),txtNomeAluno); 
+					layoutJogos.getChildren().clear();
+					layoutJogos.getChildren().addAll(linhaNome, linhaPreco, btnAdd);
+					
+					
+	    			btnAdd.setOnAction(a -> {
+	    				/* Se um dos campos estiver vazio, emite msg
+	    				 * Caso contrário, passa os dados para o método addAluno()*/
+	    				
+	    				if(txtNumAluno.getText().isEmpty() || txtNomeAluno.getText().isEmpty()) {
+	    					MenuOp.alertBox("ERRO",  "Preencha os campos");
+	    				}
+	    				else {
+	    					if(!txtNumAluno.getText().matches("[0-9]+"))
+	    					{
+	    						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+	    					}
+	    					else
+	    					{
+		    					//TODO
+		    					//Se txtNumAluno não é número => ERRO
+		    					//Se txtNomeAluno não é texto => ERRO
+		    					try
+		    				     {
+		    						Jogos j = new Jogos(txtNumAluno.getText(),txtNomeAluno.getText());
+		    				      //Cliente j = listaCliente.get(tableCliente.getSelectionModel().getSelectedIndex());
+		    				      j.setNome(txtNomeAluno.getText());
+		    				      j.setPreco(txtNumAluno.getText());
+		    				      
+		    				      SQL.alterJogo(j, listaJogos.get(tableJogos.getSelectionModel().getSelectedIndex()));
+		    				      
+		    				      listaJogos.set(row.getIndex(), clicado);//tableJogos.getSelectionModel().getSelectedIndex(), j);
+		    				      tableJogos.setItems(listaJogos);
+		    				     }
+		    				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
+		    				     {
+		    				    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
+		    				     }
+		    					try
+		    				     {
+		    				      Jogos j = clicado;//listaJogos.get(tableJogos.getSelectionModel().getSelectedIndex());
+		    				      j.setNome(txtNomeAluno.getText());
+		    				      j.setPreco(txtNumAluno.getText());
+		    				      listaJogos.set(row.getIndex(), clicado);//tableJogos.getSelectionModel().getSelectedIndex(), j);
+		    				      tableJogos.setItems(listaJogos);
+		    				     }
+		    				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
+		    				     {
+		    				    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
+		    				     }
+		    					/*
+		    					Jogos novoJogo = new Jogos(
+		    						txtNumAluno.getText(),
+		    							txtNomeAluno.getText());
+		    							//new ImageView(new Image("/images/setor.jpg"))
+		    					
+		    					//tableJogos.getItems().add(novoJogo);
+		    					tableJogos.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
+		    					tableJogos.getSelectionModel().getSelectedItem().setNome(txtNumAluno.getText());
+		    					*/
+		    					
+		    					
+		    					
+		    					txtNumAluno.clear();
+		    					txtNomeAluno.clear();
+	    					}
+	    				}
+	    				
+	    			});
+	    			
+	            }
+	            
+	            
+	        });
+	        return row ;
+	    });
 		/*----------------------------------------------------------------------
 		 *----                                                             -----
 		 *----                          fUNCIONARIO                        -----
@@ -57,7 +185,6 @@ public class MenuOp {
 		
 		Menu menuJogos =new Menu("_Jogos");
 		
-		
 		/*----------------------------------------------------------------------
 		 *----                                                             -----
 		 *----           fUNCIONARIO - jogo - create                       -----
@@ -66,10 +193,11 @@ public class MenuOp {
 		
 		
 		MenuItem jogosAddFunc = new MenuItem("Adicionar Jogo");
+		//jogosAddFunc.setStyle("graphic: ImageView { image: Image { url: \"{__DIR__}mais.png\" } }");
 		
 		jogosAddFunc.setOnAction(e->{
 			
-			edit.setScene(alunosScene);
+			edit.setScene(jogosScene);
 			edit.setHeight(150);
 			edit.setWidth(400);
 			edit.setMaxHeight(150);
@@ -79,28 +207,30 @@ public class MenuOp {
 			
 			edit.show();
 			
+			//funcionario.getChildren().clear();
 			
 			
 			GridPane grid = new GridPane();
 		    grid.setHgap(10);
 		    grid.setVgap(10);
-		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    grid.setPadding(new Insets(10, 10, 10, 10));
 		    TableColumn<Jogos, String> colunaNome = new TableColumn<>("Nome");
 			TableColumn<Jogos, String> colunaNumero = new TableColumn<>("Preço(Euros)");
-			colunaNome.setMinWidth(550);	//Largura em pixeis da coluna
+			colunaNome.setMinWidth(300);	//Largura em pixeis da coluna
 			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 			//Nome do atributo, na ObservableList, onde vai ler os dados
 			
 			//Coluna Numero
 			
-			colunaNumero.setMinWidth(560);
+			colunaNumero.setMinWidth(300);
 			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
 			
+			tableJogos.getColumns().clear();
 			//Associar as colunas à tabela
-			tableAlunos.getColumns().addAll( colunaNumero,colunaNome);
+			tableJogos.getColumns().addAll( colunaNumero,colunaNome);
 			
 			//Carregar a lista com dados
-			tableAlunos.setItems( carregarListaAlunos() );
+			tableJogos.setItems( carregarListaAlunos() );
 			
 			//Campo Nª
 			TextField txtNumAluno = new TextField();
@@ -116,6 +246,19 @@ public class MenuOp {
 			
 			//Botões para adicionar
 			Button btnAdd = new Button("Adicionar");	//Botão Adicionar
+			btnAdd.setStyle("-fx-font-size: 13pt;"
+					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+					+ "linear-gradient(#20262b, #191d22),"
+					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+					+ "rgba(255,255,255,0));"
+					+ "-fx-background-radius: 5,4,3,5;"
+					+ "-fx-background-insets: 0,1,2,0;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+					+ "-fx-font-family: \"Arial\";"
+					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+					+ "-fx-font-size: 12px;"
+					+ "-fx-padding: 10 20 10 20;");
 			btnAdd.setOnAction(a -> {
 				
 				/* Se um dos campos estiver vazio, emite msg
@@ -141,7 +284,7 @@ public class MenuOp {
 								txtNomeAluno.getText());
 								//new ImageView(new Image("/images/setor.jpg"))
 						SQL.criarJogo(novoJogo);
-						tableAlunos.getItems().add(novoJogo);
+						tableJogos.getItems().add(novoJogo);
 						
 						txtNumAluno.clear();
 						txtNomeAluno.clear();
@@ -151,7 +294,21 @@ public class MenuOp {
 				
 			});
 			Button btnAdd2 = new Button("Adicionar mais");	//Botão Adicionar
+			btnAdd2.setStyle("-fx-font-size: 13pt;"
+					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+					+ "linear-gradient(#20262b, #191d22),"
+					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+					+ "rgba(255,255,255,0));"
+					+ "-fx-background-radius: 5,4,3,5;"
+					+ "-fx-background-insets: 0,1,2,0;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+					+ "-fx-font-family: \"Arial\";"
+					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+					+ "-fx-font-size: 12px;"
+					+ "-fx-padding: 10 20 10 20;");
 			btnAdd2.setOnAction(a -> {
+				
 				edit.show();
 			});
 			/*
@@ -165,17 +322,31 @@ public class MenuOp {
 			HBox linhaPreco = new HBox();
 			linhaPreco.setPadding(new Insets(5, 5, 5, 5));
 			linhaPreco.getChildren().addAll(new Label("Nome Jogo: "),txtNomeAluno); 
-			layoutAlunos.getChildren().clear();
-			layoutAlunos.getChildren().addAll(linhaNome, linhaPreco, btnAdd);
+			layoutJogos.getChildren().clear();
+
+			layoutJogos.setStyle("-fx-background-color: #808080");
+			layoutJogos.getChildren().addAll(linhaNome, linhaPreco, btnAdd);
 			//Arranjar verticalmente a Table e a HBox layoutEdit
 			VBox layoutSub = new VBox(10);
-			layoutAlunos.setAlignment(Pos.CENTER);
-			layoutSub.getChildren().addAll(tableAlunos);
+			layoutJogos.setAlignment(Pos.CENTER);
+			layoutSub.getChildren().addAll(tableJogos);
 			
+			edit.setTitle("Add");
 			
+			HBox layoutEdit = new HBox(10);
+			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
+			layoutEdit.getChildren().addAll( btnAdd2);
+			layoutEdit.setAlignment(Pos.CENTER);
 			//grid.add(layoutEdit, 4, 6);
+			Label alter2 = new Label("Clique duas vezes para alterar");
+			HBox layoutLabel = new HBox(10);
+			layoutLabel.setPadding(new Insets(10, 10, 10, 10));
+			layoutLabel.setAlignment(Pos.CENTER);
+			layoutLabel.getChildren().addAll( alter2);
+			
+			grid.add(layoutLabel, 4, 6);
 			grid.add(layoutSub, 4, 7);
-			grid.add(btnAdd2, 4, 8);
+			grid.add(layoutEdit, 4, 8);
 			
 			funcionario.setCenter(grid);
 			
@@ -199,7 +370,8 @@ public class MenuOp {
 			GridPane grid = new GridPane();
 		    grid.setHgap(10);
 		    grid.setVgap(10);
-		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    grid.setPadding(new Insets(10, 10, 10, 10));
+		    
 		    
 		    
 		    TableColumn<Jogos, String> colunaNome = new TableColumn<>("Nome");
@@ -215,11 +387,12 @@ public class MenuOp {
 			colunaNumero.setMinWidth(300);
 			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
 			
+			tableJogos.getColumns().clear();
 			//Associar as colunas à tabela
-			tableAlunos.getColumns().addAll( colunaNome,colunaNumero);
+			tableJogos.getColumns().addAll( colunaNome,colunaNumero);
 			
 			//Carregar a lista com dados
-			tableAlunos.setItems( carregarListaAlunos() );
+			tableJogos.setItems( carregarListaAlunos() );
 			
 			//Campo Nª
 			TextField txtNumAluno = new TextField();
@@ -235,6 +408,19 @@ public class MenuOp {
 			
 			//Botões para adicionar
 			Button btnAdd = new Button("Alterar");	//Botão Adicionar
+			btnAdd.setStyle("-fx-font-size: 13pt;"
+					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+					+ "linear-gradient(#20262b, #191d22),"
+					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+					+ "rgba(255,255,255,0));"
+					+ "-fx-background-radius: 5,4,3,5;"
+					+ "-fx-background-insets: 0,1,2,0;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+					+ "-fx-font-family: \"Arial\";"
+					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+					+ "-fx-font-size: 12px;"
+					+ "-fx-padding: 10 20 10 20;");
 			btnAdd.setOnAction(a -> {
 				/* Se um dos campos estiver vazio, emite msg
 				 * Caso contrário, passa os dados para o método addAluno()*/
@@ -253,10 +439,10 @@ public class MenuOp {
 				      j.setNome(txtNomeAluno.getText());
 				      j.setPreco(txtNumAluno.getText());
 				      
-				      SQL.alterJogo(j, listaAlunos.get(tableAlunos.getSelectionModel().getSelectedIndex()));
+				      SQL.alterJogo(j, listaJogos.get(tableJogos.getSelectionModel().getSelectedIndex()));
 				      
-				      listaAlunos.set(tableAlunos.getSelectionModel().getSelectedIndex(), j);
-				      tableAlunos.setItems(listaAlunos);
+				      listaJogos.set(tableJogos.getSelectionModel().getSelectedIndex(), j);
+				      tableJogos.setItems(listaJogos);
 				     }
 				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
 				     {
@@ -264,11 +450,11 @@ public class MenuOp {
 				     }
 					try
 				     {
-				      Jogos j = listaAlunos.get(tableAlunos.getSelectionModel().getSelectedIndex());
+				      Jogos j = listaJogos.get(tableJogos.getSelectionModel().getSelectedIndex());
 				      j.setNome(txtNomeAluno.getText());
 				      j.setPreco(txtNumAluno.getText());
-				      listaAlunos.set(tableAlunos.getSelectionModel().getSelectedIndex(), j);
-				      tableAlunos.setItems(listaAlunos);
+				      listaJogos.set(tableJogos.getSelectionModel().getSelectedIndex(), j);
+				      tableJogos.setItems(listaJogos);
 				     }
 				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
 				     {
@@ -280,9 +466,9 @@ public class MenuOp {
 							txtNomeAluno.getText());
 							//new ImageView(new Image("/images/setor.jpg"))
 					
-					//tableAlunos.getItems().add(novoJogo);
-					tableAlunos.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
-					tableAlunos.getSelectionModel().getSelectedItem().setNome(txtNumAluno.getText());
+					//tableJogos.getItems().add(novoJogo);
+					tableJogos.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
+					tableJogos.getSelectionModel().getSelectedItem().setNome(txtNumAluno.getText());
 					*/txtNumAluno.clear();
 					txtNomeAluno.clear();
 				}
@@ -295,14 +481,21 @@ public class MenuOp {
 			
 			//Arranjar verticalmente a Table e a HBox layoutEdit
 			VBox layoutSub = new VBox(10);
-			layoutSub.getChildren().addAll(tableAlunos, layoutEdit);
+			layoutSub.getChildren().addAll(tableJogos);
 			
+			Label alter2 = new Label("Clique duas vezes para alterar");
+			HBox layoutLabel = new HBox(10);
+			layoutLabel.setPadding(new Insets(10, 10, 10, 10));
+			layoutLabel.setAlignment(Pos.CENTER);
+			layoutLabel.getChildren().addAll( alter2);
 			
-			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutLabel, 4, 6);
+			
+			//grid.add(layoutEdit, 4, 6);
 			grid.add(layoutSub, 4, 7);
 			
 			funcionario.setCenter(grid);
-			tableAlunos.setEditable(true);
+			tableJogos.setEditable(true);
 		});
 		
 		
@@ -325,7 +518,7 @@ public class MenuOp {
 			GridPane grid = new GridPane();
 		    grid.setHgap(10);
 		    grid.setVgap(10);
-		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    grid.setPadding(new Insets(10, 10, 10, 10));
 			
 		    TableColumn<Jogos, String> colunaNome = new TableColumn<>("Nome");
 			TableColumn<Jogos, String> colunaNumero = new TableColumn<>("Preço(Euros)");
@@ -338,35 +531,57 @@ public class MenuOp {
 			colunaNumero.setMinWidth(300);
 			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
 			
+			tableJogos.getColumns().clear();
 			//Associar as colunas à tabela
-			tableAlunos.getColumns().addAll( colunaNome,colunaNumero);
+			tableJogos.getColumns().addAll( colunaNome,colunaNumero);
 			
 			//Carregar a lista com dados
-			tableAlunos.setItems( carregarListaAlunos() );
+			tableJogos.setItems( carregarListaAlunos() );
 			
 			//Campo Nª
 			
 			Button btnDel = new Button("Apagar");
+			btnDel.setStyle("-fx-font-size: 13pt;"
+					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+					+ "linear-gradient(#20262b, #191d22),"
+					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+					+ "rgba(255,255,255,0));"
+					+ "-fx-background-radius: 5,4,3,5;"
+					+ "-fx-background-insets: 0,1,2,0;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+					+ "-fx-font-family: \"Arial\";"
+					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+					+ "-fx-font-size: 12px;"
+					+ "-fx-padding: 10 20 10 20;");
 			btnDel.setOnAction(d -> {
 				//Vamos apanhar o item selecionado e compara-lo com a lista de Alunos
 				
-				ObservableList<Jogos> alunoSelected, listaAlunos;
-				listaAlunos = tableAlunos.getItems();
-				alunoSelected = tableAlunos.getSelectionModel().getSelectedItems();
-				SQL.deleteJogo(listaAlunos.get(tableAlunos.getSelectionModel().getSelectedIndex()));
-				alunoSelected.forEach(listaAlunos::remove);
+				ObservableList<Jogos> alunoSelected, listaJogos;
+				listaJogos = tableJogos.getItems();
+				alunoSelected = tableJogos.getSelectionModel().getSelectedItems();
+				SQL.deleteJogo(listaJogos.get(tableJogos.getSelectionModel().getSelectedIndex()));
+				alunoSelected.forEach(listaJogos::remove);
 			});
 			
 			HBox layoutEdit = new HBox(10);
 			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
 			layoutEdit.getChildren().addAll( btnDel);
-			
+			layoutEdit.setAlignment(Pos.CENTER);
 			//Arranjar verticalmente a Table e a HBox layoutEdit
 			VBox layoutSub = new VBox(10);
-			layoutSub.getChildren().addAll(tableAlunos, layoutEdit);
+			layoutSub.getChildren().addAll(tableJogos, layoutEdit);
 			
 			
-			grid.add(layoutEdit, 4, 6);
+			Label alter2 = new Label("Clique duas vezes para alterar");
+			HBox layoutLabel = new HBox(10);
+			layoutLabel.setPadding(new Insets(10, 10, 10, 10));
+			layoutLabel.setAlignment(Pos.CENTER);
+			layoutLabel.getChildren().addAll( alter2);
+			
+			grid.add(layoutLabel, 4, 6);
+			
+			grid.add(layoutEdit, 4, 8);
 			grid.add(layoutSub, 4, 7);
 			
 			funcionario.setCenter(grid);
@@ -671,11 +886,11 @@ public class MenuOp {
 			btnAdd.setOnAction(a -> {
 				try
 			     {
-					ObservableList<Cliente> alunoSelected, listaAlunos;
-					listaAlunos = tableCliente.getItems();
+					ObservableList<Cliente> alunoSelected, listaJogos;
+					listaJogos = tableCliente.getItems();
 					alunoSelected = tableCliente.getSelectionModel().getSelectedItems();
 					SQL.deleteCliente(listaCliente.get(tableCliente.getSelectionModel().getSelectedIndex()));
-					alunoSelected.forEach(listaAlunos::remove);
+					alunoSelected.forEach(listaJogos::remove);
 			     }
 			     catch(java.lang.ArrayIndexOutOfBoundsException erro)
 			     {
@@ -942,11 +1157,11 @@ public class MenuOp {
 			btnDel.setOnAction(d -> {
 				//Vamos apanhar o item selecionado e compara-lo com a lista de Alunos
 				
-				ObservableList<Encomendas> alunoSelected, listaAlunos;
-				listaAlunos = tableEnc.getItems();
+				ObservableList<Encomendas> alunoSelected, listaJogos;
+				listaJogos = tableEnc.getItems();
 				alunoSelected = tableEnc.getSelectionModel().getSelectedItems();
 				SQL.deleteEnc(listaEnc.get(tableEnc.getSelectionModel().getSelectedIndex()));
-				alunoSelected.forEach(listaAlunos::remove);
+				alunoSelected.forEach(listaJogos::remove);
 			});
 			
 			HBox layoutEdit = new HBox(10);
@@ -970,20 +1185,21 @@ public class MenuOp {
 		//Passo 3
 		
 		MenuBar menuBar = new MenuBar();
-		menuBar.setStyle("-fx-background-color: #803300;");
+		//menuBar.setStyle("-fx-background-color: #803300;-fx-text-fill: green;");
 		menuBar.getMenus().addAll(menuJogos, menuCliente, menuEncomendas);
 		
-		
+		//menuBar.setStyle("-fx-text-fill: white;");
+		//menuBar.getStyleClass().addAll("menu", "label");
 		
 		Scene sceneFuncionario = new Scene(funcionario,1250,1000);
-		funcionario.setStyle("-fx-text-fill: #FFFFFF;-fx-font-size: 13pt;-fx-background-color: #1A0A00;");
+		funcionario.setStyle("-fx-font-size: 13pt;-fx-background-color: #808080;");
 		funcionario.setTop(menuBar);
 		ImageView img = new ImageView();
 		Image img2 = new Image("ruben.png");
 		
 		img.setImage(img2);
 		
-		funcionario.setCenter(img);
+		//funcionario.setCenter(img);
 
 		/*----------------------------------------------------------------------
 		 *----                                                             -----
@@ -1255,11 +1471,11 @@ public class MenuOp {
 			btnDel.setOnAction(d -> {
 				//Vamos apanhar o item selecionado e compara-lo com a lista de Alunos
 				
-				ObservableList<Encomendas> alunoSelected, listaAlunos;
-				listaAlunos = tableEnc.getItems();
+				ObservableList<Encomendas> alunoSelected, listaJogos;
+				listaJogos = tableEnc.getItems();
 				alunoSelected = tableEnc.getSelectionModel().getSelectedItems();
 				SQL.deleteEnc(listaEnc.get(tableEnc.getSelectionModel().getSelectedIndex()));
-				alunoSelected.forEach(listaAlunos::remove);
+				alunoSelected.forEach(listaJogos::remove);
 			});
 			
 			HBox layoutEdit = new HBox(10);
@@ -1309,13 +1525,28 @@ public class MenuOp {
 			janela.setMinWidth(200);							//Largura da janela
 			
 			Label mensagem = new Label(msg); 					//Cria a label para mostra
+			mensagem.setStyle("-fx-text-fill: linear-gradient(white, #d0d0d0);");
 			Button btnClose = new Button("Fechar");				//Cria botÃ£o para fechar janela
+			btnClose.setStyle("-fx-font-size: 13pt;"
+					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+					+ "linear-gradient(#20262b, #191d22),"
+					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+					+ "rgba(255,255,255,0));"
+					+ "-fx-background-radius: 5,4,3,5;"
+					+ "-fx-background-insets: 0,1,2,0;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+					+ "-fx-font-family: \"Arial\";"
+					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+					+ "-fx-font-size: 12px;"
+					+ "-fx-padding: 10 20 10 20;");
 			btnClose.setOnAction(e -> janela.close());			//AÃ§Ã£o fecha esta janela
 			
 			VBox layout = new VBox(10);							//Layout vertical com 10px entre cÃ©lulas
 			layout.getChildren().addAll(mensagem, btnClose);	//Adiciona Label e Button ao layout
 			layout.setAlignment(Pos.CENTER);					//Alinhar os cnteudos ao Centros
-			
+			layout.setStyle("-fx-font-size: 13pt;-fx-background-color: #808080;-fx-text-fill: linear-gradient(white, #d0d0d0);");
+
 			Scene scene = new Scene(layout);					//Criar a Scene e associa o Layout
 			janela.setScene(scene);								//Associa a Scena 
 			janela.showAndWait();								//Executa e prende o controlo atÃ© ser fechada
@@ -1332,12 +1563,39 @@ public class MenuOp {
 			janela.setMinWidth(200);							//Largura da janela
 			
 			Label mensagem = new Label(msg); 					//Cria a label para mostra
+			mensagem.setStyle("-fx-text-fill: linear-gradient(white, #d0d0d0);");
 			Button btnTrue = new Button("Sim");				//Cria botÃ£o para fechar janela
+			btnTrue.setStyle("-fx-font-size: 13pt;"
+					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+					+ "linear-gradient(#20262b, #191d22),"
+					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+					+ "rgba(255,255,255,0));"
+					+ "-fx-background-radius: 5,4,3,5;"
+					+ "-fx-background-insets: 0,1,2,0;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+					+ "-fx-font-family: \"Arial\";"
+					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+					+ "-fx-font-size: 12px;"
+					+ "-fx-padding: 10 20 10 20;");
 			btnTrue.setOnAction(e -> {
 				resposta = true;
 				janela.close();			//AÃ§Ã£o fecha esta janela
 			});
 			Button btnFalse = new Button("NÃ£o");
+			btnFalse.setStyle("-fx-font-size: 13pt;"
+					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+					+ "linear-gradient(#20262b, #191d22),"
+					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+					+ "rgba(255,255,255,0));"
+					+ "-fx-background-radius: 5,4,3,5;"
+					+ "-fx-background-insets: 0,1,2,0;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+					+ "-fx-font-family: \"Arial\";"
+					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+					+ "-fx-font-size: 12px;"
+					+ "-fx-padding: 10 20 10 20;");
 			btnFalse.setOnAction(e -> {
 				resposta = false;
 				janela.close();			//AÃ§Ã£o fecha esta janela
@@ -1347,11 +1605,12 @@ public class MenuOp {
 			VBox layout1 = new VBox(10);
 			layout.getChildren().addAll(mensagem, layout1);
 			layout.setAlignment(Pos.CENTER);
-			
+			layout.setStyle("-fx-font-size: 13pt;-fx-background-color: #808080;");
 			layout1.getChildren().addAll(btnTrue, btnFalse);
 		
 			
 			Scene scene = new Scene(layout);					//Criar a Scene e associa o Layout
+			
 			janela.setScene(scene);								//Associa a Scena 
 			janela.showAndWait();								//Executa e prende o controlo atÃ© ser fechada
 			
@@ -1361,8 +1620,8 @@ public class MenuOp {
 		
 		private static ObservableList<Jogos> carregarListaAlunos() {
 			// TODO Auto-generated method stub
-			listaAlunos = SQL.dadosRecebe("SELECT * FROM `gestao de jogos` WHERE 1");
-			return listaAlunos;
+			listaJogos = SQL.dadosRecebe("SELECT * FROM `gestao de jogos` WHERE 1");
+			return listaJogos;
 		}
 		
 		private static ObservableList<Encomendas> carregarListaEncomendas() {
