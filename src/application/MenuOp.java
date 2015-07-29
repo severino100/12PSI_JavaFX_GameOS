@@ -38,12 +38,12 @@ public class MenuOp {
 	
 	static TableView<Encomendas> tableEnc = new TableView<>();
 	static ObservableList<Encomendas> listaEnc = FXCollections.observableArrayList();
-	static BorderPane layoutEnc = new BorderPane(); 
+	static VBox layoutEnc = new VBox(); 
 	static Scene encScene = new Scene(layoutEnc);
 	
 	static TableView<Cliente> tableCliente = new TableView<>();
 	static ObservableList<Cliente> listaCliente = FXCollections.observableArrayList();
-	static BorderPane layoutCliente = new BorderPane(); 
+	static VBox layoutCliente = new VBox(); 
 	static Scene clienteScene = new Scene(layoutCliente);
 	
 	
@@ -101,8 +101,14 @@ public class MenuOp {
 					HBox linhaPreco = new HBox();
 					linhaPreco.setPadding(new Insets(5, 5, 5, 5));
 					linhaPreco.getChildren().addAll(new Label("Nome Jogo: "),txtNomeAluno); 
+					
+					HBox linhabtn = new HBox();
+					linhabtn.setPadding(new Insets(5, 5, 5, 5));
+					linhabtn.getChildren().addAll(btnAdd);
+					linhabtn.setAlignment(Pos.CENTER);
+					
 					layoutJogos.getChildren().clear();
-					layoutJogos.getChildren().addAll(linhaNome, linhaPreco, btnAdd);
+					layoutJogos.getChildren().addAll(linhaNome, linhaPreco, linhabtn);
 					
 					
 	    			btnAdd.setOnAction(a -> {
@@ -145,6 +151,8 @@ public class MenuOp {
 		    				      j.setPreco(txtNumAluno.getText());
 		    				      listaJogos.set(row.getIndex(), clicado);//tableJogos.getSelectionModel().getSelectedIndex(), j);
 		    				      tableJogos.setItems(listaJogos);
+		    				      
+		    				      edit.close();
 		    				     }
 		    				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
 		    				     {
@@ -165,6 +173,357 @@ public class MenuOp {
 		    					
 		    					txtNumAluno.clear();
 		    					txtNomeAluno.clear();
+	    					}
+	    				}
+	    				
+	    			});
+	    			
+	            }
+	            
+	            
+	        });
+	        
+	        return row ;
+	    });
+	    
+	 
+	    tableCliente.setRowFactory( tv -> {
+	        TableRow<Cliente> row = new TableRow<>();
+	        row.setOnMouseClicked(event -> {
+	            if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+	            	Cliente clicado = row.getItem(); //Clicado
+	                //MenuOp.alertBox("",rowData.getNome()); 
+	            	
+	            	edit.setScene(clienteScene);
+	    			edit.setHeight(300);
+	    			edit.setWidth(260);
+	    			edit.setMaxHeight(300);
+	    			edit.setMaxWidth(260);
+	    			edit.setMinHeight(300);
+	    			edit.setMinWidth(260);
+	    			edit.setTitle("Alter");
+	    			layoutCliente.setStyle("-fx-background-color: #808080");
+	    			
+	                edit.show();
+	                
+	              //Campo Nª
+	    			TextField txtNumAluno = new TextField();
+	    			txtNumAluno.setPromptText("Idade");
+	    			//txtNumAluno.setMinWidth(120);
+	    			txtNumAluno.setMaxWidth(200);
+	    			
+	    			//Campo Nome
+	    			TextField txtNomeAluno = new TextField();
+	    			txtNomeAluno.setPromptText("Nome");
+	    			//txtNomeAluno.setMinWidth(120);
+	    			txtNomeAluno.setMaxWidth(200);
+	    			
+	    			TextField txtNomeAutor = new TextField();
+	    			txtNomeAutor.setPromptText("email");
+	    			//txtNomeAluno.setMinWidth(120);
+	    			txtNomeAutor.setMaxWidth(200);
+	    			
+	    			TextField txtTele = new TextField();
+	    			txtTele.setPromptText("Telemovel");
+	    			//txtNomeAluno.setMinWidth(120);
+	    			txtTele.setMaxWidth(200);
+	    			
+	    			TextField txtUser = new TextField();
+	    			txtUser.setPromptText("User");
+	    			//txtNomeAluno.setMinWidth(120);
+	    			txtUser.setMaxWidth(200);
+	    			
+	    			TextField txtPass = new TextField();
+	    			txtPass.setPromptText("Pass");
+	    			//txtNomeAluno.setMinWidth(120);
+	    			txtPass.setMaxWidth(200);
+	    			
+	    			
+	    			//Botões para adicionar
+	    			Button btnAdd = new Button("Alterar");	//Botão Adicionar
+	    			btnAdd.setStyle("-fx-font-size: 13pt;"
+	    					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+	    					+ "linear-gradient(#20262b, #191d22),"
+	    					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+	    					+ "rgba(255,255,255,0));"
+	    					+ "-fx-background-radius: 5,4,3,5;"
+	    					+ "-fx-background-insets: 0,1,2,0;"
+	    					+ "-fx-text-fill: white;"
+	    					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+	    					+ "-fx-font-family: \"Arial\";"
+	    					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+	    					+ "-fx-font-size: 12px;"
+	    					+ "-fx-padding: 10 20 10 20;");
+	    			HBox linhaNome = new HBox();
+	    			linhaNome.getChildren().addAll(new Label("Idade:        "),txtNumAluno); 
+	    			linhaNome.setPadding(new Insets(5, 5, 5, 5));
+	    			
+	    			HBox linhaIdade = new HBox();
+	    			linhaIdade.setPadding(new Insets(5, 5, 5, 5));
+	    			linhaIdade.getChildren().addAll(new Label("Nome:       "),txtNomeAluno); 
+	    			
+	    			HBox linhaemil = new HBox();
+	    			linhaemil.setPadding(new Insets(5, 5, 5, 5));
+	    			linhaemil.getChildren().addAll(new Label("Email:        "),txtNomeAutor);
+	    			
+	    			HBox Telemo = new HBox();
+	    			Telemo.setPadding(new Insets(5, 5, 5, 5));
+	    			Telemo.getChildren().addAll(new Label("Telemovel: "),txtTele); 
+	    			
+	    			
+	    			HBox user = new HBox();
+	    			user.setPadding(new Insets(5, 5, 5, 5));
+	    			user.getChildren().addAll(new Label("User:          "),txtUser); 
+	    			
+	    			HBox linhaPass = new HBox();
+	    			linhaPass.setPadding(new Insets(5, 5, 5, 5));
+	    			linhaPass.getChildren().addAll(new Label("Pass:          "),txtPass);
+					HBox linhabtn = new HBox();
+					linhabtn.setPadding(new Insets(5, 5, 5, 5));
+					linhabtn.getChildren().addAll(btnAdd);
+					linhabtn.setAlignment(Pos.CENTER);
+					
+					
+					layoutCliente.getChildren().clear();
+					layoutCliente.getChildren().addAll(linhaNome, linhaIdade, linhaemil,Telemo,user,linhaPass, linhabtn);
+					
+					
+	    			btnAdd.setOnAction(a -> {
+	    				/* Se um dos campos estiver vazio, emite msg
+	    				 * Caso contrário, passa os dados para o método addAluno()*/
+	    				
+	    				if(txtNumAluno.getText().isEmpty() || txtNomeAluno.getText().isEmpty() || txtNomeAutor.getText().isEmpty() || txtTele.getText().isEmpty() || txtUser.getText().isEmpty() || txtPass.getText().isEmpty())  {
+	    					MenuOp.alertBox("ERRO",  "Preencha os campos");
+	    				}
+	    				else {
+	    					if(!txtNumAluno.getText().matches("[0-9]+"))
+	    					{
+	    						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+	    					}
+	    					else
+	    					{
+	    						if(!txtTele.getText().matches("[0-9]+"))
+		    					{
+		    						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+		    					}
+	    						else
+	    						{
+	    							
+			    					//TODO
+			    					//Se txtNumAluno não é número => ERRO
+			    					//Se txtNomeAluno não é texto => ERRO
+			    					try
+			    				     {
+			    						Cliente j = new Cliente(txtNumAluno.getText(),txtNomeAluno.getText(),txtNomeAutor.getText(),txtTele.getText(),txtUser.getText(),txtPass.getText());
+			    				      //Cliente j = listaCliente.get(tableCliente.getSelectionModel().getSelectedIndex());
+			    				      j.setNome(txtNomeAluno.getText());
+			    				      j.setIdade(txtNumAluno.getText());
+			    				      j.setEmail(txtNomeAutor.getText());
+			    				      j.setNrTelemovel(txtTele.getText());
+			    				      j.setUsername(txtUser.getText());
+			    				      j.setPassword(txtPass.getText());
+			    				      
+			    				      SQL.alterCliente(j, listaCliente.get(tableCliente.getSelectionModel().getSelectedIndex()));
+			    				      
+			    				      listaCliente.set(row.getIndex(), clicado);//tableJogos.getSelectionModel().getSelectedIndex(), j);
+			    				      tableCliente.setItems(listaCliente);
+			    				     }
+			    				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
+			    				     {
+			    				    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
+			    				     }
+			    					try
+			    				     {
+			    						  Cliente j = clicado;//listaJogos.get(tableJogos.getSelectionModel().getSelectedIndex());
+			    						  j.setNome(txtNomeAluno.getText());
+				    				      j.setIdade(txtNumAluno.getText());
+				    				      j.setEmail(txtNomeAutor.getText());
+				    				      j.setNrTelemovel(txtTele.getText());
+				    				      j.setUsername(txtUser.getText());
+				    				      j.setPassword(txtPass.getText());
+				    				      listaCliente.set(row.getIndex(), clicado);//tableJogos.getSelectionModel().getSelectedIndex(), j);
+				    				      tableCliente.setItems(listaCliente);
+				    				      
+				    				      edit.close();
+			    				     }
+			    				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
+			    				     {
+			    				    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
+			    				     }
+			    					/*
+			    					Jogos novoJogo = new Jogos(
+			    						txtNumAluno.getText(),
+			    							txtNomeAluno.getText());
+			    							//new ImageView(new Image("/images/setor.jpg"))
+			    					
+			    					//tableJogos.getItems().add(novoJogo);
+			    					tableJogos.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
+			    					tableJogos.getSelectionModel().getSelectedItem().setNome(txtNumAluno.getText());
+			    					*/
+			    					
+			    					
+			    					
+			    					txtNumAluno.clear();
+			    					txtNomeAluno.clear();
+		    					}
+	    					}
+	    				}
+	    				
+	    			});
+	    			
+	            }
+	            
+	            
+	        });
+	        return row ;
+	    });
+	    
+	    
+	    
+	    tableEnc.setRowFactory( tv -> {
+	        TableRow<Encomendas> row = new TableRow<>();
+	        row.setOnMouseClicked(event -> {
+	            if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+	            	Encomendas clicado = row.getItem(); //Clicado
+	                //MenuOp.alertBox("",rowData.getNome()); 
+	            	
+	            	edit.setScene(clienteScene);
+	    			edit.setHeight(200);
+	    			edit.setWidth(260);
+	    			edit.setMaxHeight(200);
+	    			edit.setMaxWidth(260);
+	    			edit.setMinHeight(200);
+	    			edit.setMinWidth(260);
+	    			edit.setTitle("Alter");
+	    			layoutCliente.setStyle("-fx-background-color: #808080");
+	    			
+	                edit.show();
+	                
+	              //Campo Nª
+	              //Campo Nª
+	    			TextField txtNumAluno = new TextField();
+	    			txtNumAluno.setPromptText("Preço");
+	    			//txtNumAluno.setMinWidth(330);
+	    			txtNumAluno.setMaxWidth(200);
+	    			
+	    			//Campo Nome
+	    			TextField txtNomeAluno = new TextField();
+	    			txtNomeAluno.setPromptText("Nome");
+	    			//txtNomeAluno.setMinWidth(120);
+	    			txtNomeAluno.setMaxWidth(200);
+	    			
+	    			TextField txtNomeAutor = new TextField();
+	    			txtNomeAutor.setPromptText("Autor");
+	    			//txtNomeAluno.setMinWidth(120);
+	    			txtNomeAutor.setMaxWidth(200);
+	    			
+
+	    			
+	    			
+	    			//Botões para adicionar
+	    			Button btnAdd = new Button("Alterar");	//Botão Adicionar
+	    			btnAdd.setStyle("-fx-font-size: 13pt;"
+	    					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+	    					+ "linear-gradient(#20262b, #191d22),"
+	    					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+	    					+ "rgba(255,255,255,0));"
+	    					+ "-fx-background-radius: 5,4,3,5;"
+	    					+ "-fx-background-insets: 0,1,2,0;"
+	    					+ "-fx-text-fill: white;"
+	    					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+	    					+ "-fx-font-family: \"Arial\";"
+	    					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+	    					+ "-fx-font-size: 12px;"
+	    					+ "-fx-padding: 10 20 10 20;");
+	    			HBox linhaNome = new HBox();
+					linhaNome.getChildren().addAll(new Label("Preco Jogo: "),txtNumAluno); 
+					linhaNome.setPadding(new Insets(5, 5, 5, 5));
+					
+					HBox linhaIdade = new HBox();
+					linhaIdade.setPadding(new Insets(5, 5, 5, 5));
+					linhaIdade.getChildren().addAll(new Label("Nome Jogo: "),txtNomeAluno); 
+					
+					HBox linhaemil = new HBox();
+					linhaemil.setPadding(new Insets(5, 5, 5, 5));
+					linhaemil.getChildren().addAll(new Label("Nome Autor: "),txtNomeAutor);
+					
+					HBox linhabtn = new HBox();
+					linhabtn.setPadding(new Insets(5, 5, 5, 5));
+					linhabtn.getChildren().addAll(btnAdd);
+					linhabtn.setAlignment(Pos.CENTER);
+
+					layoutCliente.getChildren().clear();
+					layoutCliente.getChildren().addAll(linhaNome, linhaIdade, linhaemil,linhabtn);
+					
+					
+	    			btnAdd.setOnAction(a -> {
+	    				/* Se um dos campos estiver vazio, emite msg
+	    				 * Caso contrário, passa os dados para o método addAluno()*/
+	    				
+	    				if(txtNumAluno.getText().isEmpty() || txtNomeAluno.getText().isEmpty() || txtNomeAutor.getText().isEmpty())  {
+	    					MenuOp.alertBox("ERRO",  "Preencha os campos");
+	    				}
+	    				else {
+	    					if(!txtNumAluno.getText().matches("[0-9]+"))
+	    					{
+	    						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+	    					}
+	    					else
+	    					{
+	    							
+		    					//TODO
+		    					//Se txtNumAluno não é número => ERRO
+		    					//Se txtNomeAluno não é texto => ERRO
+		    					try
+		    				     {
+		    						Encomendas j = new Encomendas(txtNumAluno.getText(),txtNomeAluno.getText(),txtNomeAutor.getText());
+		    				      //Cliente j = listaCliente.get(tableCliente.getSelectionModel().getSelectedIndex());
+		    				      j.setNome(txtNomeAluno.getText());
+		    				      j.setPreco(txtNumAluno.getText());
+		    				      j.setAutor(txtNomeAutor.getText());
+		    			
+		    				      
+		    				      SQL.alterEnc(j, listaEnc.get(tableEnc.getSelectionModel().getSelectedIndex()));
+		    				      
+		    				      listaEnc.set(row.getIndex(), clicado);//tableJogos.getSelectionModel().getSelectedIndex(), j);
+		    				      tableEnc.setItems(listaEnc);
+		    				     }
+		    				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
+		    				     {
+		    				    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
+		    				     }
+		    					try
+		    				     {
+		    						  Encomendas j = clicado;//listaJogos.get(tableJogos.getSelectionModel().getSelectedIndex());
+		    						  j.setNome(txtNomeAluno.getText());
+			    				      j.setPreco(txtNumAluno.getText());
+			    				      j.setAutor(txtNomeAutor.getText());
+			   
+			    				      listaEnc.set(row.getIndex(), clicado);//tableJogos.getSelectionModel().getSelectedIndex(), j);
+			    				      tableEnc.setItems(listaEnc);
+			    				      
+			    				      edit.close();
+		    				     }
+		    				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
+		    				     {
+		    				    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
+		    				     }
+		    					/*
+		    					Jogos novoJogo = new Jogos(
+		    						txtNumAluno.getText(),
+		    							txtNomeAluno.getText());
+		    							//new ImageView(new Image("/images/setor.jpg"))
+		    					
+		    					//tableJogos.getItems().add(novoJogo);
+		    					tableJogos.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
+		    					tableJogos.getSelectionModel().getSelectedItem().setNome(txtNumAluno.getText());
+		    					*/
+		    					
+		    					
+		    					
+		    					txtNumAluno.clear();
+		    					txtNomeAluno.clear();
+		    					
 	    					}
 	    				}
 	    				
@@ -435,7 +794,7 @@ public class MenuOp {
 					try
 				     {
 						Jogos j = new Jogos(txtNumAluno.getText(),txtNomeAluno.getText());
-				      //Cliente j = listaCliente.get(tableCliente.getSelectionModel().getSelectedIndex());
+				      //Encomendas j = listaCliente.get(tableCliente.getSelectionModel().getSelectedIndex());
 				      j.setNome(txtNomeAluno.getText());
 				      j.setPreco(txtNumAluno.getText());
 				      
@@ -598,10 +957,23 @@ public class MenuOp {
 		MenuItem addCliente = new MenuItem("Adicionar Cliente");
 		
 		addCliente.setOnAction(e->{
+			layoutCliente.getChildren().clear();
+			edit.setScene(clienteScene);
+			edit.setHeight(300);
+			edit.setWidth(260);
+			edit.setMaxHeight(300);
+			edit.setMaxWidth(260);
+			edit.setMinHeight(300);
+			edit.setMinWidth(260);
+			edit.setTitle("Alter");
+			layoutCliente.setStyle("-fx-background-color: #808080");
+			
+			edit.show();
+			
 			GridPane grid = new GridPane();
 		    grid.setHgap(10);
 		    grid.setVgap(10);
-		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    grid.setPadding(new Insets(10, 10, 10, 10));
 		    TableColumn<Cliente, String> colunaNome = new TableColumn<>("Nome");
 			TableColumn<Cliente, String> colunaIdade = new TableColumn<>("Idade");
 			TableColumn<Cliente, String> colunaEmail = new TableColumn<>("Email");
@@ -627,7 +999,7 @@ public class MenuOp {
 			
 			colunaPass.setMinWidth(200);
 			colunaPass.setCellValueFactory(new PropertyValueFactory<>("Password"));
-			
+			tableCliente.getColumns().clear();
 			//Associar as colunas à tabela
 			tableCliente.getColumns().addAll( colunaNome,colunaIdade, colunaEmail, colunaTele, colunaUser, colunaPass );
 			
@@ -636,15 +1008,15 @@ public class MenuOp {
 			
 			//Campo Nª
 			TextField txtNumAluno = new TextField();
-			txtNumAluno.setPromptText("Nome");
+			txtNumAluno.setPromptText("Idade");
 			//txtNumAluno.setMinWidth(120);
-			txtNumAluno.setMaxWidth(120);
+			txtNumAluno.setMaxWidth(200);
 			
 			//Campo Nome
 			TextField txtNomeAluno = new TextField();
-			txtNomeAluno.setPromptText("Idade");
+			txtNomeAluno.setPromptText("Nome");
 			//txtNomeAluno.setMinWidth(120);
-			txtNomeAluno.setMaxWidth(120);
+			txtNomeAluno.setMaxWidth(200);
 			
 			TextField txtNomeAutor = new TextField();
 			txtNomeAutor.setPromptText("email");
@@ -654,17 +1026,17 @@ public class MenuOp {
 			TextField txtTele = new TextField();
 			txtTele.setPromptText("Telemovel");
 			//txtNomeAluno.setMinWidth(120);
-			txtTele.setMaxWidth(170);
+			txtTele.setMaxWidth(200);
 			
 			TextField txtUser = new TextField();
 			txtUser.setPromptText("User");
 			//txtNomeAluno.setMinWidth(120);
-			txtUser.setMaxWidth(120);
+			txtUser.setMaxWidth(200);
 			
 			TextField txtPass = new TextField();
 			txtPass.setPromptText("Pass");
 			//txtNomeAluno.setMinWidth(120);
-			txtPass.setMaxWidth(150);
+			txtPass.setMaxWidth(200);
 			
 			
 			//Botões para adicionar
@@ -673,45 +1045,125 @@ public class MenuOp {
 				/* Se um dos campos estiver vazio, emite msg
 				 * Caso contrário, passa os dados para o método addAluno()*/
 				
-				if(txtNumAluno.getText().isEmpty() || txtNomeAluno.getText().isEmpty()) {
+				if(txtNumAluno.getText().isEmpty() || txtNomeAluno.getText().isEmpty() || txtNomeAutor.getText().isEmpty() || txtTele.getText().isEmpty() || txtUser.getText().isEmpty() || txtPass.getText().isEmpty())  {
 					MenuOp.alertBox("ERRO",  "Preencha os campos");
 				}
 				else {
+					if(!txtNumAluno.getText().matches("[0-9]+"))
+					{
+						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+					}
+					else
+					{
+						if(!txtTele.getText().matches("[0-9]+"))
+    					{
+    						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+    					}
+						else
+						{
+							//TODO
+							//Se txtNumAluno não é número => ERRO
+							//Se txtNomeAluno não é texto => ERRO
+							
+							Cliente novoCliente = new Cliente(
+								txtNumAluno.getText(),
+								txtNomeAluno.getText(),
+								txtNomeAutor.getText(),
+								txtTele.getText(),
+								txtUser.getText(),
+								txtPass.getText());
+							SQL.criarCliente(novoCliente);
+							tableCliente.getItems().add(novoCliente);
+							
+							txtNumAluno.clear();
+							txtNomeAluno.clear();
+							txtNomeAutor.clear();
+							txtTele.clear();
+							txtUser.clear();
+							txtPass.clear();
+							edit.close();
+						}}
+					}
 					//TODO
 					//Se txtNumAluno não é número => ERRO
 					//Se txtNomeAluno não é texto => ERRO
-					
-					Cliente novoCliente = new Cliente(
-							txtNomeAluno.getText(),
-							txtNumAluno.getText(),
-							txtNomeAutor.getText(),
-							txtTele.getText(),
-							txtUser.getText(),
-							txtPass.getText());
-							//new ImageView(new Image("/images/setor.jpg"))
-					SQL.criarCliente(novoCliente);
-					/*
-					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
-					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNumAluno.getText());
-					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNomeAutor.getText());*/
-					tableCliente.getItems().add(novoCliente);
-					
-					txtNumAluno.clear();
-					txtNomeAluno.clear();
-				}
+
+				
 			});
+			Button btnAdd2 = new Button("Adicionar mais");	//Botão Adicionar
+			btnAdd2.setStyle("-fx-font-size: 13pt;"
+					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+					+ "linear-gradient(#20262b, #191d22),"
+					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+					+ "rgba(255,255,255,0));"
+					+ "-fx-background-radius: 5,4,3,5;"
+					+ "-fx-background-insets: 0,1,2,0;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+					+ "-fx-font-family: \"Arial\";"
+					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+					+ "-fx-font-size: 12px;"
+					+ "-fx-padding: 10 20 10 20;");
+			btnAdd2.setOnAction(a -> {
+				
+				edit.show();
+			});
+			
+			HBox linhaNome = new HBox();
+			linhaNome.getChildren().addAll(new Label("Idade:        "),txtNumAluno); 
+			linhaNome.setPadding(new Insets(5, 5, 5, 5));
+			
+			HBox linhaIdade = new HBox();
+			linhaIdade.setPadding(new Insets(5, 5, 5, 5));
+			linhaIdade.getChildren().addAll(new Label("Nome:       "),txtNomeAluno); 
+			
+			HBox linhaemil = new HBox();
+			linhaemil.setPadding(new Insets(5, 5, 5, 5));
+			linhaemil.getChildren().addAll(new Label("Email:        "),txtNomeAutor);
+			
+			HBox Telemo = new HBox();
+			Telemo.setPadding(new Insets(5, 5, 5, 5));
+			Telemo.getChildren().addAll(new Label("Telemovel: "),txtTele); 
+			
+			
+			HBox user = new HBox();
+			user.setPadding(new Insets(5, 5, 5, 5));
+			user.getChildren().addAll(new Label("User:          "),txtUser); 
+			
+			HBox linhaPass = new HBox();
+			linhaPass.setPadding(new Insets(5, 5, 5, 5));
+			linhaPass.getChildren().addAll(new Label("Pass:          "),txtPass);
+			
+			HBox linhabtn = new HBox();
+			linhabtn.setPadding(new Insets(5, 5, 5, 5));
+			linhabtn.getChildren().addAll(btnAdd);
+			linhabtn.setAlignment(Pos.CENTER); 
+			
+			layoutCliente.getChildren().clear();
+			layoutCliente.getChildren().addAll(linhaNome, linhaIdade, linhaemil,Telemo,user,linhaPass, linhabtn);
+
+			layoutCliente.setStyle("-fx-background-color: #808080");
+			//Arranjar verticalmente a Table e a HBox layoutEdit
+			VBox layoutSub = new VBox(10);
+			layoutCliente.setAlignment(Pos.CENTER);
+			layoutSub.getChildren().addAll(tableCliente);
+			
+			edit.setTitle("Add32");
 			
 			HBox layoutEdit = new HBox(10);
 			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
-			layoutEdit.getChildren().addAll(txtNumAluno, txtNomeAluno,txtNomeAutor,txtTele,txtUser,txtPass, btnAdd);
+			layoutEdit.getChildren().addAll( btnAdd2);
+			layoutEdit.setAlignment(Pos.CENTER);
+			//grid.add(layoutEdit, 4, 6);
+			Label alter2 = new Label("Clique duas vezes para alterar");
+			HBox layoutLabel = new HBox(10);
+			layoutLabel.setPadding(new Insets(10, 10, 10, 10));
+			layoutLabel.setAlignment(Pos.CENTER);
+			layoutLabel.getChildren().addAll( alter2);
 			
-			//Arranjar verticalmente a Table e a HBox layoutEdit
-			VBox layoutSub = new VBox(10);
-			layoutSub.getChildren().addAll(tableCliente, layoutEdit);
-			
-			
-			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutLabel, 4, 6);
 			grid.add(layoutSub, 4, 7);
+			grid.add(layoutEdit, 4, 8);
 			
 			funcionario.setCenter(grid);
 			
@@ -722,7 +1174,7 @@ public class MenuOp {
 			GridPane grid = new GridPane();
 		    grid.setHgap(10);
 		    grid.setVgap(10);
-		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    grid.setPadding(new Insets(10, 10, 10, 10));
 		    TableColumn<Cliente, String> colunaNome = new TableColumn<>("Nome");
 			TableColumn<Cliente, String> colunaIdade = new TableColumn<>("Idade");
 			TableColumn<Cliente, String> colunaEmail = new TableColumn<>("Email");
@@ -748,95 +1200,26 @@ public class MenuOp {
 			
 			colunaPass.setMinWidth(200);
 			colunaPass.setCellValueFactory(new PropertyValueFactory<>("Password"));
-			
+			tableCliente.getColumns().clear();
 			//Associar as colunas à tabela
 			tableCliente.getColumns().addAll( colunaNome,colunaIdade, colunaEmail, colunaTele, colunaUser, colunaPass );
 			
 			//Carregar a lista com dados
 			tableCliente.setItems( carregarListaCliente() );
-			
-			//Campo Nª
-			TextField txtNumAluno = new TextField();
-			txtNumAluno.setPromptText("Nome");
-			//txtNumAluno.setMinWidth(120);
-			txtNumAluno.setMaxWidth(120);
-			
-			//Campo Nome
-			TextField txtNomeAluno = new TextField();
-			txtNomeAluno.setPromptText("Idade");
-			//txtNomeAluno.setMinWidth(120);
-			txtNomeAluno.setMaxWidth(120);
-			
-			TextField txtNomeAutor = new TextField();
-			txtNomeAutor.setPromptText("email");
-			//txtNomeAluno.setMinWidth(120);
-			txtNomeAutor.setMaxWidth(200);
-			
-			TextField txtTele = new TextField();
-			txtTele.setPromptText("Telemovel");
-			//txtNomeAluno.setMinWidth(120);
-			txtTele.setMaxWidth(170);
-			
-			TextField txtUser = new TextField();
-			txtUser.setPromptText("User");
-			//txtNomeAluno.setMinWidth(120);
-			txtUser.setMaxWidth(120);
-			
-			TextField txtPass = new TextField();
-			txtPass.setPromptText("Pass");
-			//txtNomeAluno.setMinWidth(120);
-			txtPass.setMaxWidth(150);
-			
-			
-			//Botões para adicionar
-			Button btnAdd = new Button("ALterar");	//Botão Adicionar
-			btnAdd.setOnAction(a -> {
-				/* Se um dos campos estiver vazio, emite msg
-				 * Caso contrário, passa os dados para o método addAluno()*/
-				
-				if(txtNumAluno.getText().isEmpty() || txtNomeAluno.getText().isEmpty()) {
-					MenuOp.alertBox("ERRO",  "Preencha os campos");
-				}
-				else {
-					//TODO
-					//Se txtNumAluno não é número => ERRO
-					//Se txtNomeAluno não é texto => ERRO
-					
-					try
-				     {
-						Cliente j = new Cliente(txtNumAluno.getText(),txtNomeAluno.getText(),txtNomeAutor.getText(),txtTele.getText(),txtUser.getText(),txtPass.getText());
-				      //Cliente j = listaCliente.get(tableCliente.getSelectionModel().getSelectedIndex());
-				      j.setNome(txtNumAluno.getText());
-				      j.setIdade(txtNomeAluno.getText());
-				      j.setEmail(txtNomeAutor.getText());
-				      j.setNrTelemovel(txtTele.getText());
-				      j.setUsername(txtUser.getText());
-				      j.setPassword(txtPass.getText());
-				      
-				      SQL.alterCliente(j, listaCliente.get(tableCliente.getSelectionModel().getSelectedIndex()));
-				      
-				      listaCliente.set(tableCliente.getSelectionModel().getSelectedIndex(), j);
-				      tableCliente.setItems(listaCliente);
-				     }
-				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
-				     {
-				    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
-				     }
-					txtNumAluno.clear();
-					txtNomeAluno.clear();
-				}
-			});
-			
-			HBox layoutEdit = new HBox(10);
-			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
-			layoutEdit.getChildren().addAll(txtNumAluno, txtNomeAluno,txtNomeAutor,txtTele,txtUser,txtPass, btnAdd);
-			
+			Label alter2 = new Label("Clique duas vezes para alterar");
+			HBox layoutLabel = new HBox(10);
+			layoutLabel.setPadding(new Insets(10, 10, 10, 10));
+			layoutLabel.setAlignment(Pos.CENTER);
+			layoutLabel.getChildren().addAll( alter2);
+		
+		
+			grid.add(layoutLabel, 4, 6);
 			//Arranjar verticalmente a Table e a HBox layoutEdit
 			VBox layoutSub = new VBox(10);
-			layoutSub.getChildren().addAll(tableCliente, layoutEdit);
+			layoutSub.getChildren().addAll(tableCliente);
 			
 			
-			grid.add(layoutEdit, 4, 6);
+	
 			grid.add(layoutSub, 4, 7);
 			
 			funcionario.setCenter(grid);
@@ -847,7 +1230,7 @@ public class MenuOp {
 			GridPane grid = new GridPane();
 		    grid.setHgap(10);
 		    grid.setVgap(10);
-		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    grid.setPadding(new Insets(10, 10, 10, 10));
 		    TableColumn<Cliente, String> colunaNome = new TableColumn<>("Nome");
 			TableColumn<Cliente, String> colunaIdade = new TableColumn<>("Idade");
 			TableColumn<Cliente, String> colunaEmail = new TableColumn<>("Email");
@@ -873,7 +1256,7 @@ public class MenuOp {
 			
 			colunaPass.setMinWidth(200);
 			colunaPass.setCellValueFactory(new PropertyValueFactory<>("Password"));
-			
+			tableCliente.getColumns().clear();
 			//Associar as colunas à tabela
 			tableCliente.getColumns().addAll( colunaNome,colunaIdade, colunaEmail, colunaTele, colunaUser, colunaPass );
 			
@@ -883,6 +1266,20 @@ public class MenuOp {
 			
 			//Botões para adicionar
 			Button btnAdd = new Button("Eliminar");	//Botão Adicionar
+			
+			btnAdd.setStyle("-fx-font-size: 13pt;"
+					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+					+ "linear-gradient(#20262b, #191d22),"
+					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+					+ "rgba(255,255,255,0));"
+					+ "-fx-background-radius: 5,4,3,5;"
+					+ "-fx-background-insets: 0,1,2,0;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+					+ "-fx-font-family: \"Arial\";"
+					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+					+ "-fx-font-size: 12px;"
+					+ "-fx-padding: 10 20 10 20;");
 			btnAdd.setOnAction(a -> {
 				try
 			     {
@@ -901,13 +1298,19 @@ public class MenuOp {
 			HBox layoutEdit = new HBox(10);
 			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
 			layoutEdit.getChildren().addAll(btnAdd);
-			
+			layoutEdit.setAlignment(Pos.CENTER);
 			//Arranjar verticalmente a Table e a HBox layoutEdit
 			VBox layoutSub = new VBox(10);
 			layoutSub.getChildren().addAll(tableCliente, layoutEdit);
+			Label alter2 = new Label("Clique duas vezes para alterar");
+			HBox layoutLabel = new HBox(10);
+			layoutLabel.setPadding(new Insets(10, 10, 10, 10));
+			layoutLabel.setAlignment(Pos.CENTER);
+			layoutLabel.getChildren().addAll( alter2);
 			
+			grid.add(layoutLabel, 4, 6);
 			
-			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutEdit, 4, 8);
 			grid.add(layoutSub, 4, 7);
 			
 			funcionario.setCenter(grid);
@@ -929,25 +1332,38 @@ public class MenuOp {
 		MenuItem fazerEncFunc = new MenuItem("Fazer uma Encomenda");
 		
 		fazerEncFunc.setOnAction(e->{
+			layoutEnc.getChildren().clear();
+			edit.setScene(encScene);
+			edit.setHeight(200);
+			edit.setWidth(280);
+			edit.setMaxHeight(200);
+			edit.setMaxWidth(280);
+			edit.setMinHeight(200);
+			edit.setMinWidth(280);
+			edit.setTitle("Alter");
+			layoutCliente.setStyle("-fx-background-color: #808080");
+			
+			edit.show();
+			
 			GridPane grid = new GridPane();
 		    grid.setHgap(10);
 		    grid.setVgap(10);
-		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    grid.setPadding(new Insets(10,10,10,10));
 		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
 			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
 			
 			
-			colunaNome.setMinWidth(370);	//Largura em pixeis da coluna
+			colunaNome.setMinWidth(250);	//Largura em pixeis da coluna
 			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 			//Nome do atributo, na ObservableList, onde vai ler os dados
-			colunaQuem.setMinWidth(370);	//Largura em pixeis da coluna
+			colunaQuem.setMinWidth(240);	//Largura em pixeis da coluna
 			colunaQuem.setCellValueFactory(new PropertyValueFactory<>("autor"));
 			//Coluna Numero
 			
-			colunaNumero.setMinWidth(370);
+			colunaNumero.setMinWidth(130);
 			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
-			
+			tableEnc.getColumns().clear();
 			//Associar as colunas à tabela
 			tableEnc.getColumns().addAll( colunaNome,colunaNumero, colunaQuem);
 			
@@ -974,6 +1390,19 @@ public class MenuOp {
 			
 			//Botões para adicionar
 			Button btnAdd = new Button("Encomendar");	//Botão Adicionar
+			btnAdd.setStyle("-fx-font-size: 13pt;"
+					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+					+ "linear-gradient(#20262b, #191d22),"
+					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+					+ "rgba(255,255,255,0));"
+					+ "-fx-background-radius: 5,4,3,5;"
+					+ "-fx-background-insets: 0,1,2,0;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+					+ "-fx-font-family: \"Arial\";"
+					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+					+ "-fx-font-size: 12px;"
+					+ "-fx-padding: 10 20 10 20;");
 			btnAdd.setMaxWidth(275);
 			btnAdd.setOnAction(a -> {
 				/* Se um dos campos estiver vazio, emite msg
@@ -983,37 +1412,96 @@ public class MenuOp {
 					MenuOp.alertBox("ERRO",  "Preencha os campos");
 				}
 				else {
-					//TODO
-					//Se txtNumAluno não é número => ERRO
-					//Se txtNomeAluno não é texto => ERRO
 					
-					Encomendas novoJogo = new Encomendas(
-							txtNumAluno.getText(),
-							txtNomeAluno.getText(),
-							txtNomeAutor.getText());
-							//new ImageView(new Image("/images/setor.jpg"))
-					SQL.criarEnc(novoJogo);
-					/*
-					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
-					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNumAluno.getText());
-					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNomeAutor.getText());*/
-					tableEnc.getItems().add(novoJogo);
-					
-					txtNumAluno.clear();
-					txtNomeAluno.clear();
+					if(!txtNumAluno.getText().matches("[0-9]+"))
+					{
+						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+					}
+					else
+					{
+						//TODO
+						//Se txtNumAluno não é número => ERRO
+						//Se txtNomeAluno não é texto => ERRO
+						
+						Encomendas novoJogo = new Encomendas(
+								txtNumAluno.getText(),
+								txtNomeAluno.getText(),
+								txtNomeAutor.getText());
+								//new ImageView(new Image("/images/setor.jpg"))
+						SQL.criarEnc(novoJogo);
+						/*
+						tableEnc.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
+						tableEnc.getSelectionModel().getSelectedItem().setNome(txtNumAluno.getText());
+						tableEnc.getSelectionModel().getSelectedItem().setNome(txtNomeAutor.getText());*/
+						tableEnc.getItems().add(novoJogo);
+						edit.close();
+						txtNumAluno.clear();
+						txtNomeAluno.clear();
+						txtNomeAutor.clear();
+					}
 				}
 			});
+			Button btnAdd2 = new Button("Encomendar mais");	//Botão Adicionar
+			btnAdd2.setStyle("-fx-font-size: 13pt;"
+					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+					+ "linear-gradient(#20262b, #191d22),"
+					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+					+ "rgba(255,255,255,0));"
+					+ "-fx-background-radius: 5,4,3,5;"
+					+ "-fx-background-insets: 0,1,2,0;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+					+ "-fx-font-family: \"Arial\";"
+					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+					+ "-fx-font-size: 12px;"
+					+ "-fx-padding: 10 20 10 20;");
+			btnAdd2.setOnAction(a -> {
+				
+				edit.show();
+			});
+			
+			HBox linhaNome = new HBox();
+			linhaNome.getChildren().addAll(new Label("Preco do Jogo:  "),txtNumAluno); 
+			linhaNome.setPadding(new Insets(5, 5, 5, 5));
+			
+			HBox linhaIdade = new HBox();
+			linhaIdade.setPadding(new Insets(5, 5, 5, 5));
+			linhaIdade.getChildren().addAll(new Label("Nome do Jogo: "),txtNomeAluno); 
+			
+			HBox linhaemil = new HBox();
+			linhaemil.setPadding(new Insets(5, 5, 5, 5));
+			linhaemil.getChildren().addAll(new Label("Nome do Autor:"),txtNomeAutor);
+			
+			HBox linhabtn = new HBox();
+			linhabtn.setPadding(new Insets(5, 5, 5, 5));
+			linhabtn.getChildren().addAll(btnAdd);
+			linhabtn.setAlignment(Pos.CENTER); 
+			
+			layoutEnc.getChildren().clear();
+			layoutEnc.getChildren().addAll(linhaNome, linhaIdade, linhaemil,linhabtn);
+
+			layoutEnc.setStyle("-fx-background-color: #808080");
+			//Arranjar verticalmente a Table e a HBox layoutEdit
+			VBox layoutSub = new VBox(10);
+			layoutEnc.setAlignment(Pos.CENTER);
+			layoutSub.getChildren().addAll(tableEnc);
+			
+			edit.setTitle("Add");
 			
 			HBox layoutEdit = new HBox(10);
 			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
-			layoutEdit.getChildren().addAll(txtNumAluno, txtNomeAluno,txtNomeAutor, btnAdd);
+			layoutEdit.getChildren().addAll( btnAdd2);
+			layoutEdit.setAlignment(Pos.CENTER);
+			//grid.add(layoutEdit, 4, 6);
+			Label alter2 = new Label("Clique duas vezes para alterar");
+			HBox layoutLabel = new HBox(10);
+			layoutLabel.setPadding(new Insets(10, 10, 10, 10));
+			layoutLabel.setAlignment(Pos.CENTER);
+			layoutLabel.getChildren().addAll( alter2);
 			
-			//Arranjar verticalmente a Table e a HBox layoutEdit
-			VBox layoutSub = new VBox(10);
-			layoutSub.getChildren().addAll(tableEnc, layoutEdit);
-			
-			
-			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutLabel, 4, 6);
+			//Arranjar verticalmente a Table e a HBox layoutEdi
+			grid.add(layoutEdit, 4, 8);
 			grid.add(layoutSub, 4, 7);
 			
 			funcionario.setCenter(grid);
@@ -1026,97 +1514,41 @@ public class MenuOp {
 			GridPane grid = new GridPane();
 		    grid.setHgap(10);
 		    grid.setVgap(10);
-		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    grid.setPadding(new Insets(10,10,10,10));
 		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
 			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
 			
 			
-			colunaNome.setMinWidth(370);	//Largura em pixeis da coluna
+			colunaNome.setMinWidth(250);	//Largura em pixeis da coluna
 			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 			//Nome do atributo, na ObservableList, onde vai ler os dados
-			colunaQuem.setMinWidth(370);	//Largura em pixeis da coluna
+			colunaQuem.setMinWidth(240);	//Largura em pixeis da coluna
 			colunaQuem.setCellValueFactory(new PropertyValueFactory<>("autor"));
 			//Coluna Numero
 			
-			colunaNumero.setMinWidth(370);
+			colunaNumero.setMinWidth(130);
 			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
-			
+			tableEnc.getColumns().clear();
+
 			//Associar as colunas à tabela
 			tableEnc.getColumns().addAll( colunaNome,colunaNumero, colunaQuem);
 			
 			//Carregar a lista com dados
 			tableEnc.setItems( carregarListaEncomendas() );
-			
-			//Campo Nª
-			TextField txtNumAluno = new TextField();
-			txtNumAluno.setPromptText("Preço");
-			//txtNumAluno.setMinWidth(330);
-			txtNumAluno.setMaxWidth(310);
-			
-			//Campo Nome
-			TextField txtNomeAluno = new TextField();
-			txtNomeAluno.setPromptText("Nome");
-			//txtNomeAluno.setMinWidth(120);
-			txtNomeAluno.setMaxWidth(310);
-			
-			TextField txtNomeAutor = new TextField();
-			txtNomeAutor.setPromptText("Autor");
-			//txtNomeAluno.setMinWidth(120);
-			txtNomeAutor.setMaxWidth(310);
-			
-			
-			//Botões para adicionar
-			Button btnAdd = new Button("Encomendar");	//Botão Adicionar
-			btnAdd.setMaxWidth(275);
-			btnAdd.setOnAction(a -> {
-				/* Se um dos campos estiver vazio, emite msg
-				 * Caso contrário, passa os dados para o método addAluno()*/
-				
-				if(txtNumAluno.getText().isEmpty() || txtNomeAluno.getText().isEmpty()) {
-					MenuOp.alertBox("ERRO",  "Preencha os campos");
-				}
-				else {
-					//TODO
-					//Se txtNumAluno não é número => ERRO
-					//Se txtNomeAluno não é texto => ERRO
-					
-					try
-				     {
-				      //Encomendas j = listaEnc.get(tableEnc.getSelectionModel().getSelectedIndex());
-					  Encomendas j = new Encomendas(txtNumAluno.getText(),txtNomeAluno.getText(),txtNomeAutor.getText());
-				      j.setNome(txtNomeAluno.getText());
-				      j.setPreco(txtNumAluno.getText());
-				      j.setAutor(txtNomeAutor.getText());
-				        
-				      System.out.println(j.getNome() + " " +listaEnc.get(tableEnc.getSelectionModel().getSelectedIndex()).getNome() );
-				      SQL.alterEnc(j, listaEnc.get(tableEnc.getSelectionModel().getSelectedIndex()));
-				      listaEnc.set(tableEnc.getSelectionModel().getSelectedIndex(), j);
-				      
-				      tableEnc.setItems(listaEnc);
-				      
 
-				     }
-				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
-				     {
-				    	 erro.printStackTrace();
-				    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
-				     }
-					txtNumAluno.clear();
-					txtNomeAluno.clear();
-				}
-			});
-			
-			HBox layoutEdit = new HBox(10);
-			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
-			layoutEdit.getChildren().addAll(txtNumAluno, txtNomeAluno,txtNomeAutor, btnAdd);
 			
 			//Arranjar verticalmente a Table e a HBox layoutEdit
 			VBox layoutSub = new VBox(10);
-			layoutSub.getChildren().addAll(tableEnc, layoutEdit);
+			layoutSub.getChildren().addAll(tableEnc);
 			
+			Label alter2 = new Label("Clique duas vezes para alterar");
+			HBox layoutLabel = new HBox(10);
+			layoutLabel.setPadding(new Insets(10, 10, 10, 10));
+			layoutLabel.setAlignment(Pos.CENTER);
+			layoutLabel.getChildren().addAll( alter2);
 			
-			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutLabel, 4, 6);
 			grid.add(layoutSub, 4, 7);
 			
 			funcionario.setCenter(grid);
@@ -1128,22 +1560,23 @@ public class MenuOp {
 			GridPane grid = new GridPane();
 		    grid.setHgap(10);
 		    grid.setVgap(10);
-		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    grid.setPadding(new Insets(10,10,10,10));
 		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
 			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
 			
 			
-			colunaNome.setMinWidth(370);	//Largura em pixeis da coluna
+			colunaNome.setMinWidth(250);	//Largura em pixeis da coluna
 			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 			//Nome do atributo, na ObservableList, onde vai ler os dados
-			colunaQuem.setMinWidth(370);	//Largura em pixeis da coluna
+			colunaQuem.setMinWidth(240);	//Largura em pixeis da coluna
 			colunaQuem.setCellValueFactory(new PropertyValueFactory<>("autor"));
 			//Coluna Numero
 			
-			colunaNumero.setMinWidth(370);
+			colunaNumero.setMinWidth(130);
 			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
-			
+			tableEnc.getColumns().clear();
+
 			//Associar as colunas à tabela
 			tableEnc.getColumns().addAll( colunaNome,colunaNumero, colunaQuem);
 			
@@ -1153,6 +1586,19 @@ public class MenuOp {
 			
 			//Botões para adicionar
 			Button btnDel = new Button("Delete");	//Botão Adicionar
+			btnDel.setStyle("-fx-font-size: 13pt;"
+					+ "-fx-background-color: #090a0c,linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+					+ "linear-gradient(#20262b, #191d22),"
+					+ "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), "
+					+ "rgba(255,255,255,0));"
+					+ "-fx-background-radius: 5,4,3,5;"
+					+ "-fx-background-insets: 0,1,2,0;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+					+ "-fx-font-family: \"Arial\";"
+					+ "-fx-text-fill: linear-gradient(white, #d0d0d0);"
+					+ "-fx-font-size: 12px;"
+					+ "-fx-padding: 10 20 10 20;");
 			btnDel.setMaxWidth(275);
 			btnDel.setOnAction(d -> {
 				//Vamos apanhar o item selecionado e compara-lo com a lista de Alunos
@@ -1167,13 +1613,21 @@ public class MenuOp {
 			HBox layoutEdit = new HBox(10);
 			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
 			layoutEdit.getChildren().addAll( btnDel);
-			
+			layoutEdit.setAlignment(Pos.CENTER);
 			//Arranjar verticalmente a Table e a HBox layoutEdit
 			VBox layoutSub = new VBox(10);
-			layoutSub.getChildren().addAll(tableEnc, layoutEdit);
+			layoutSub.getChildren().addAll(tableEnc);
+			
+			Label alter2 = new Label("Clique duas vezes para alterar");
+			HBox layoutLabel = new HBox(10);
+			layoutLabel.setPadding(new Insets(10, 10, 10, 10));
+			layoutLabel.setAlignment(Pos.CENTER);
+			layoutLabel.getChildren().addAll( alter2);
+			
+			grid.add(layoutLabel, 4, 6);
 			
 			
-			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutEdit, 4, 8);
 			grid.add(layoutSub, 4, 7);
 			
 			funcionario.setCenter(grid);
@@ -1195,11 +1649,11 @@ public class MenuOp {
 		funcionario.setStyle("-fx-font-size: 13pt;-fx-background-color: #808080;");
 		funcionario.setTop(menuBar);
 		ImageView img = new ImageView();
-		Image img2 = new Image("ruben.png");
+		Image img2 = new Image("jogos.png");
 		
 		img.setImage(img2);
 		
-		//funcionario.setCenter(img);
+		funcionario.setCenter(img);
 
 		/*----------------------------------------------------------------------
 		 *----                                                             -----
@@ -1248,7 +1702,8 @@ public class MenuOp {
 			
 			colunaNumero.setMinWidth(200);
 			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
-			
+			tableEnc.getColumns().clear();
+
 			//Associar as colunas à tabela
 			tableEnc.getColumns().addAll( colunaNome,colunaNumero, colunaQuem);
 			
@@ -1341,7 +1796,8 @@ public class MenuOp {
 			
 			colunaNumero.setMinWidth(200);
 			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
-			
+			tableEnc.getColumns().clear();
+
 			//Associar as colunas à tabela
 			tableEnc.getColumns().addAll( colunaNome,colunaNumero, colunaQuem);
 			
@@ -1442,7 +1898,8 @@ public class MenuOp {
 			
 			colunaNumero.setMinWidth(200);
 			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
-			
+			tableEnc.getColumns().clear();
+
 			//Associar as colunas à tabela
 			tableEnc.getColumns().addAll( colunaNome,colunaNumero, colunaQuem);
 			
@@ -1499,10 +1956,15 @@ public class MenuOp {
 		//Passo 3
 		
 		MenuBar menuBarCliente = new MenuBar();
-		menuBarCliente.setStyle("-fx-background-color: #00001A;");
+		//menuBarCliente.setStyle("-fx-background-color: #00001A;");
 		menuBarCliente.getMenus().addAll(menuEncomendas);
 		//cliente
+		ImageView img = new ImageView();
+		Image img2 = new Image("jogos.png");
 		
+		img.setImage(img2);
+		
+		cliente.setCenter(img);
 		cliente.setStyle("-fx-text-fill: #FFFFFF;-fx-font-size: 13pt;-fx-background-color: #00004C;");
 		Scene sceneCliente = new Scene(cliente,1250,700);
 		cliente.setTop(menuBarCliente);

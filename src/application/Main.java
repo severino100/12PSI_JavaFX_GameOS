@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
@@ -104,20 +105,21 @@ public class Main extends Application {
 			
 			Scene sceneLogin = new Scene(grid,420,200);
 			
-			
+			primaryStage.getIcons().add(new Image("icon.png"));
+				primaryStage.centerOnScreen();
 			btnOK.setOnAction(e -> {
 				
-				primaryStage.setScene(MenuOp.menuFunc());
-				primaryStage.setTitle("Games");
-				primaryStage.setHeight(500);
-				primaryStage.setWidth(700);
-				primaryStage.centerOnScreen();
+				//primaryStage.setScene(MenuOp.menuFunc());
+				
 				if(new String("ruben").equals(usernameField.getText()))
 				{
 					if(new String("1234").equals(passwordfield.getText()))
 					{
 						primaryStage.setScene(MenuOp.menuFunc());
-				
+						primaryStage.setTitle("Games");
+						primaryStage.setHeight(600);
+						primaryStage.setWidth(700);
+						primaryStage.centerOnScreen();
 					}
 					else
 					{
@@ -129,21 +131,16 @@ public class Main extends Application {
 					if(SQL.verificarLogin(usernameField.getText(), passwordfield.getText()))
 					{
 						primaryStage.setScene(MenuOp.menuCliente());
+						primaryStage.setTitle("Games");
+						primaryStage.setHeight(600);
+						primaryStage.setWidth(700);
+						primaryStage.centerOnScreen();
 					}
 					else{
 						MenuOp.alertBox("Atenção", "User ou Pass errados");
 					}
-					/*
-					if(new String("david").equals(usernameField.getText()))
-					{
-						if(new String("david").equals(passwordfield.getText()))
-						{
 					
-						}
-					}
-					else{
-						MenuOp.alertBox("ATENCAO", "User ou Pass errados");
-					}*/
+					
 				}
 				
 				
