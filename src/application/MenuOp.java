@@ -48,7 +48,9 @@ public class MenuOp {
 	
 	
 	public static Scene menuFunc(){
-
+		
+		
+		edit.getIcons().add(new Image("icon.png"));
 	    tableJogos.setRowFactory( tv -> {
 	        TableRow<Jogos> row = new TableRow<>();
 	        row.setOnMouseClicked(event -> {
@@ -121,7 +123,7 @@ public class MenuOp {
 	    				else {
 	    					if(!txtNumAluno.getText().matches("[0-9]+"))
 	    					{
-	    						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+	    						MenuOp.alertBox("ERRO",  "Preço contem letras ou caracteres desconhecidos");
 	    					}
 	    					else
 	    					{
@@ -298,13 +300,13 @@ public class MenuOp {
 	    				else {
 	    					if(!txtNumAluno.getText().matches("[0-9]+"))
 	    					{
-	    						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+	    						MenuOp.alertBox("ERRO",  "Preço contem letras ou caracteres desconhecidos");
 	    					}
 	    					else
 	    					{
 	    						if(!txtTele.getText().matches("[0-9]+"))
 		    					{
-		    						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+		    						MenuOp.alertBox("ERRO",  "Telemovel contem letras ou caracteres desconhecidos");
 		    					}
 	    						else
 	    						{
@@ -387,7 +389,7 @@ public class MenuOp {
 	            	Encomendas clicado = row.getItem(); //Clicado
 	                //MenuOp.alertBox("",rowData.getNome()); 
 	            	
-	            	edit.setScene(clienteScene);
+	            	edit.setScene(encScene);
 	    			edit.setHeight(200);
 	    			edit.setWidth(260);
 	    			edit.setMaxHeight(200);
@@ -395,7 +397,7 @@ public class MenuOp {
 	    			edit.setMinHeight(200);
 	    			edit.setMinWidth(260);
 	    			edit.setTitle("Alter");
-	    			layoutCliente.setStyle("-fx-background-color: #808080");
+	    			layoutEnc.setStyle("-fx-background-color: #808080");
 	    			
 	                edit.show();
 	                
@@ -452,8 +454,8 @@ public class MenuOp {
 					linhabtn.getChildren().addAll(btnAdd);
 					linhabtn.setAlignment(Pos.CENTER);
 
-					layoutCliente.getChildren().clear();
-					layoutCliente.getChildren().addAll(linhaNome, linhaIdade, linhaemil,linhabtn);
+					layoutEnc.getChildren().clear();
+					layoutEnc.getChildren().addAll(linhaNome, linhaIdade, linhaemil,linhabtn);
 					
 					
 	    			btnAdd.setOnAction(a -> {
@@ -466,7 +468,7 @@ public class MenuOp {
 	    				else {
 	    					if(!txtNumAluno.getText().matches("[0-9]+"))
 	    					{
-	    						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+	    						MenuOp.alertBox("ERRO",  "Preço contem letras ou caracteres desconhecidos");
 	    					}
 	    					else
 	    					{
@@ -630,7 +632,7 @@ public class MenuOp {
 				else {
 					if(!txtNumAluno.getText().matches("[0-9]+"))
 					{
-						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+						MenuOp.alertBox("ERRO",  "Preço contem letras ou caracteres desconhecidos");
 					}
 					else
 					{
@@ -1051,13 +1053,13 @@ public class MenuOp {
 				else {
 					if(!txtNumAluno.getText().matches("[0-9]+"))
 					{
-						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+						MenuOp.alertBox("ERRO",  "Preço contem letras ou caracteres desconhecidos");
 					}
 					else
 					{
 						if(!txtTele.getText().matches("[0-9]+"))
     					{
-    						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+    						MenuOp.alertBox("ERRO",  "Telemovel contem letras ou caracteres desconhecidos");
     					}
 						else
 						{
@@ -1415,7 +1417,7 @@ public class MenuOp {
 					
 					if(!txtNumAluno.getText().matches("[0-9]+"))
 					{
-						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+						MenuOp.alertBox("ERRO",  "Preço contem letras ou caracteres desconhecidos");
 					}
 					else
 					{
@@ -1678,32 +1680,199 @@ public class MenuOp {
 		 *----                          CLIENTE                            -----
 		 *----                                                             ----- 
 		 *----------------------------------------------------------------------*/
-		
+		edit.getIcons().add(new Image("icon.png"));
 		
 		Menu menuEncomendas = new Menu("E_ncomendas");
+		
+		tableEnc.setRowFactory( tv -> {
+	        TableRow<Encomendas> row = new TableRow<>();
+	        row.setOnMouseClicked(event -> {
+	            if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+	            	Encomendas clicado = row.getItem(); //Clicado
+	                //MenuOp.alertBox("",rowData.getNome()); 
+	            	
+	            	edit.setScene(encScene);
+	    			edit.setHeight(200);
+	    			edit.setWidth(260);
+	    			edit.setMaxHeight(200);
+	    			edit.setMaxWidth(260);
+	    			edit.setMinHeight(200);
+	    			edit.setMinWidth(260);
+	    			edit.setTitle("Alter");
+	    			layoutEnc.setStyle("-fx-background-color: #99D6FF");
+	    			
+	                edit.show();
+	                
+	              //Campo Nª
+	              //Campo Nª
+	    			TextField txtNumAluno = new TextField();
+	    			txtNumAluno.setPromptText("Preço");
+	    			//txtNumAluno.setMinWidth(330);
+	    			txtNumAluno.setMaxWidth(200);
+	    			
+	    			//Campo Nome
+	    			TextField txtNomeAluno = new TextField();
+	    			txtNomeAluno.setPromptText("Nome");
+	    			//txtNomeAluno.setMinWidth(120);
+	    			txtNomeAluno.setMaxWidth(200);
+	    			
+	    			TextField txtNomeAutor = new TextField();
+	    			txtNomeAutor.setPromptText("Autor");
+	    			//txtNomeAluno.setMinWidth(120);
+	    			txtNomeAutor.setMaxWidth(200);
+	    			
+
+	    			
+	    			
+	    			//Botões para adicionar
+	    			Button btnAdd = new Button("Alterar");	//Botão Adicionar
+	    			btnAdd.setStyle("-fx-background-color: #a6b5c9,"
+	    					+ "linear-gradient(#303842 0%, #3e5577 20%, #375074 100%),"
+	    					+ "linear-gradient(#768aa5 0%, #849cbb 5%, #5877a2 50%, #486a9a 51%, #4a6c9b 100%);"
+	    					+ "-fx-background-insets: 0 0 -1 0,0,1;"
+	    					+ "-fx-background-radius: 5,5,4;"
+	    					+ "-fx-padding: 7 30 7 30;"
+	    					+ "-fx-text-fill: #242d35;"
+	    					+ "-fx-font-family: \"Helvetica\";"
+	    					+ "-fx-font-size: 12px;"
+	    					+ "-fx-text-fill: white;");
+	    			
+					HBox linhaNome = new HBox();
+					linhaNome.getChildren().addAll(new Label("Preco Jogo: "),txtNumAluno); 
+					linhaNome.setPadding(new Insets(5, 5, 5, 5));
+					
+					HBox linhaIdade = new HBox();
+					linhaIdade.setPadding(new Insets(5, 5, 5, 5));
+					linhaIdade.getChildren().addAll(new Label("Nome Jogo: "),txtNomeAluno); 
+					
+					HBox linhaemil = new HBox();
+					linhaemil.setPadding(new Insets(5, 5, 5, 5));
+					linhaemil.getChildren().addAll(new Label("Nome Autor: "),txtNomeAutor);
+					
+					HBox linhabtn = new HBox();
+					linhabtn.setPadding(new Insets(5, 5, 5, 5));
+					linhabtn.getChildren().addAll(btnAdd);
+					linhabtn.setAlignment(Pos.CENTER);
+
+					layoutCliente.getChildren().clear();
+					layoutCliente.getChildren().addAll(linhaNome, linhaIdade, linhaemil,linhabtn);
+					
+	    			btnAdd.setOnAction(a -> {
+	    				/* Se um dos campos estiver vazio, emite msg
+	    				 * Caso contrário, passa os dados para o método addAluno()*/
+	    				
+	    				if(txtNumAluno.getText().isEmpty() || txtNomeAluno.getText().isEmpty() || txtNomeAutor.getText().isEmpty())  {
+	    					MenuOp.alertBox("ERRO",  "Preencha os campos");
+	    				}
+	    				else {
+	    					if(!txtNumAluno.getText().matches("[0-9]+"))
+	    					{
+	    						MenuOp.alertBox("ERRO",  "Preço contem letras ou caracteres desconhecidos");
+	    					}
+	    					else
+	    					{
+	    							
+		    					//TODO
+		    					//Se txtNumAluno não é número => ERRO
+		    					//Se txtNomeAluno não é texto => ERRO
+		    					try
+		    				     {
+		    						Encomendas j = new Encomendas(txtNumAluno.getText(),txtNomeAluno.getText(),txtNomeAutor.getText());
+		    				      //Cliente j = listaCliente.get(tableCliente.getSelectionModel().getSelectedIndex());
+		    				      j.setNome(txtNomeAluno.getText());
+		    				      j.setPreco(txtNumAluno.getText());
+		    				      j.setAutor(txtNomeAutor.getText());
+		    			
+		    				      
+		    				      SQL.alterEnc(j, listaEnc.get(tableEnc.getSelectionModel().getSelectedIndex()));
+		    				      
+		    				      listaEnc.set(row.getIndex(), clicado);//tableJogos.getSelectionModel().getSelectedIndex(), j);
+		    				      tableEnc.setItems(listaEnc);
+		    				     }
+		    				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
+		    				     {
+		    				    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
+		    				     }
+		    					try
+		    				     {
+		    						  Encomendas j = clicado;//listaJogos.get(tableJogos.getSelectionModel().getSelectedIndex());
+		    						  j.setNome(txtNomeAluno.getText());
+			    				      j.setPreco(txtNumAluno.getText());
+			    				      j.setAutor(txtNomeAutor.getText());
+			   
+			    				      listaEnc.set(row.getIndex(), clicado);//tableJogos.getSelectionModel().getSelectedIndex(), j);
+			    				      tableEnc.setItems(listaEnc);
+			    				      layoutEnc.getChildren().clear();
+			    				      edit.close();
+		    				     }
+		    				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
+		    				     {
+		    				    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
+		    				     }
+		    					/*
+		    					Jogos novoJogo = new Jogos(
+		    						txtNumAluno.getText(),
+		    							txtNomeAluno.getText());
+		    							//new ImageView(new Image("/images/setor.jpg"))
+		    					
+		    					//tableJogos.getItems().add(novoJogo);
+		    					tableJogos.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
+		    					tableJogos.getSelectionModel().getSelectedItem().setNome(txtNumAluno.getText());
+		    					*/
+		    					
+		    					
+		    					
+		    					txtNumAluno.clear();
+		    					txtNomeAluno.clear();
+		    					
+	    					}
+	    				}
+	    				
+	    			});
+	    			
+	            }
+	            
+	            
+	        });
+	        return row ;
+	    });
+		
+		
 		MenuItem fazerEncFunc = new MenuItem("Fazer uma Encomenda");
 		
 		fazerEncFunc.setOnAction(e->{
+			layoutEnc.getChildren().clear();
+			edit.setScene(encScene);
+			edit.setHeight(200);
+			edit.setWidth(280);
+			edit.setMaxHeight(200);
+			edit.setMaxWidth(280);
+			edit.setMinHeight(200);
+			edit.setMinWidth(280);
+			edit.setTitle("Alter");
+			layoutCliente.setStyle("-fx-background-color: #99D6FF");
+			
+			edit.show();
+			
 			GridPane grid = new GridPane();
 		    grid.setHgap(10);
 		    grid.setVgap(10);
-		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    grid.setPadding(new Insets(10,10,10,10));
 		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
 			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
 			
 			
-			colunaNome.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaNome.setMinWidth(250);	//Largura em pixeis da coluna
 			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 			//Nome do atributo, na ObservableList, onde vai ler os dados
-			colunaQuem.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaQuem.setMinWidth(240);	//Largura em pixeis da coluna
 			colunaQuem.setCellValueFactory(new PropertyValueFactory<>("autor"));
 			//Coluna Numero
 			
-			colunaNumero.setMinWidth(200);
+			colunaNumero.setMinWidth(130);
 			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
 			tableEnc.getColumns().clear();
-
 			//Associar as colunas à tabela
 			tableEnc.getColumns().addAll( colunaNome,colunaNumero, colunaQuem);
 			
@@ -1713,23 +1882,30 @@ public class MenuOp {
 			//Campo Nª
 			TextField txtNumAluno = new TextField();
 			txtNumAluno.setPromptText("Preço");
-			txtNumAluno.setMinWidth(120);
-			txtNumAluno.setMaxWidth(120);
+			//txtNumAluno.setMinWidth(330);
+			txtNumAluno.setMaxWidth(310);
 			
 			//Campo Nome
 			TextField txtNomeAluno = new TextField();
 			txtNomeAluno.setPromptText("Nome");
 			//txtNomeAluno.setMinWidth(120);
-			txtNomeAluno.setMaxWidth(120);
+			txtNomeAluno.setMaxWidth(310);
 			
 			TextField txtNomeAutor = new TextField();
 			txtNomeAutor.setPromptText("Autor");
 			//txtNomeAluno.setMinWidth(120);
-			txtNomeAutor.setMaxWidth(120);
+			txtNomeAutor.setMaxWidth(310);
 			
 			
 			//Botões para adicionar
 			Button btnAdd = new Button("Encomendar");	//Botão Adicionar
+			btnAdd.setStyle("-fx-background-color: #000000,linear-gradient(#7ebcea, #2f4b8f),linear-gradient(#426ab7, #263e75),linear-gradient(#395cab, #223768);"
+					+ "-fx-background-insets: 0,1,2,3;"
+					+ "-fx-background-radius: 3,2,2,2;"
+					+ "-fx-padding: 12 30 12 30;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-font-size: 12px;");
+			btnAdd.setMaxWidth(275);
 			btnAdd.setOnAction(a -> {
 				/* Se um dos campos estiver vazio, emite msg
 				 * Caso contrário, passa os dados para o método addAluno()*/
@@ -1738,40 +1914,93 @@ public class MenuOp {
 					MenuOp.alertBox("ERRO",  "Preencha os campos");
 				}
 				else {
-					//TODO
-					//Se txtNumAluno não é número => ERRO
-					//Se txtNomeAluno não é texto => ERRO
 					
-					Encomendas novoJogo = new Encomendas(
-							txtNumAluno.getText(),
-							txtNomeAluno.getText(),
-							txtNomeAutor.getText());
-							//new ImageView(new Image("/images/setor.jpg"))
-					SQL.criarEnc(novoJogo);
-					/*
-					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
-					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNumAluno.getText());
-					tableEnc.getSelectionModel().getSelectedItem().setNome(txtNomeAutor.getText());*/
-					tableEnc.getItems().add(novoJogo);
-					
-					txtNumAluno.clear();
-					txtNomeAluno.clear();
+					if(!txtNumAluno.getText().matches("[0-9]+"))
+					{
+						MenuOp.alertBox("ERRO",  "Meu querido boi, ouve la isto não pode ter letras, entendido?");
+					}
+					else
+					{
+						//TODO
+						//Se txtNumAluno não é número => ERRO
+						//Se txtNomeAluno não é texto => ERRO
+						
+						Encomendas novoJogo = new Encomendas(
+								txtNumAluno.getText(),
+								txtNomeAluno.getText(),
+								txtNomeAutor.getText());
+								//new ImageView(new Image("/images/setor.jpg"))
+						SQL.criarEnc(novoJogo);
+						/*
+						tableEnc.getSelectionModel().getSelectedItem().setNome(txtNomeAluno.getText());
+						tableEnc.getSelectionModel().getSelectedItem().setNome(txtNumAluno.getText());
+						tableEnc.getSelectionModel().getSelectedItem().setNome(txtNomeAutor.getText());*/
+						tableEnc.getItems().add(novoJogo);
+						edit.close();
+						layoutEnc.getChildren().clear();
+						txtNumAluno.clear();
+						txtNomeAluno.clear();
+						txtNomeAutor.clear();
+					}
 				}
 			});
+			Button btnAdd2 = new Button("Encomendar mais");	//Botão Adicionar
+			btnAdd2.setStyle("-fx-background-color: #000000,linear-gradient(#7ebcea, #2f4b8f),linear-gradient(#426ab7, #263e75),linear-gradient(#395cab, #223768);"
+					+ "-fx-background-insets: 0,1,2,3;"
+					+ "-fx-background-radius: 3,2,2,2;"
+					+ "-fx-padding: 12 30 12 30;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-font-size: 12px;");
+			btnAdd2.setOnAction(a -> {
+				
+				edit.show();
+			});
+			
+			HBox linhaNome = new HBox();
+			linhaNome.getChildren().addAll(new Label("Preco do Jogo:  "),txtNumAluno); 
+			linhaNome.setPadding(new Insets(5, 5, 5, 5));
+			
+			HBox linhaIdade = new HBox();
+			linhaIdade.setPadding(new Insets(5, 5, 5, 5));
+			linhaIdade.getChildren().addAll(new Label("Nome do Jogo: "),txtNomeAluno); 
+			
+			HBox linhaemil = new HBox();
+			linhaemil.setPadding(new Insets(5, 5, 5, 5));
+			linhaemil.getChildren().addAll(new Label("Nome do Autor:"),txtNomeAutor);
+			
+			HBox linhabtn = new HBox();
+			linhabtn.setPadding(new Insets(5, 5, 5, 5));
+			linhabtn.getChildren().addAll(btnAdd);
+			linhabtn.setAlignment(Pos.CENTER); 
+			
+			layoutEnc.getChildren().clear();
+			layoutEnc.getChildren().addAll(linhaNome, linhaIdade, linhaemil,linhabtn);
+
+			layoutEnc.setStyle("-fx-background-color: #99D6FF");
+			//Arranjar verticalmente a Table e a HBox layoutEdit
+			VBox layoutSub = new VBox(10);
+			layoutEnc.setAlignment(Pos.CENTER);
+			layoutSub.getChildren().addAll(tableEnc);
+			
+			edit.setTitle("Add");
 			
 			HBox layoutEdit = new HBox(10);
 			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
-			layoutEdit.getChildren().addAll(txtNumAluno, txtNomeAluno,txtNomeAutor, btnAdd);
+			layoutEdit.getChildren().addAll( btnAdd2);
+			layoutEdit.setAlignment(Pos.CENTER);
+			//grid.add(layoutEdit, 4, 6);
+			Label alter2 = new Label("Clique duas vezes para alterar");
+			HBox layoutLabel = new HBox(10);
+			layoutLabel.setPadding(new Insets(10, 10, 10, 10));
+			layoutLabel.setAlignment(Pos.CENTER);
+			layoutLabel.getChildren().addAll( alter2);
 			
-			//Arranjar verticalmente a Table e a HBox layoutEdit
-			VBox layoutSub = new VBox(10);
-			layoutSub.getChildren().addAll(tableEnc, layoutEdit);
-			
-			
-			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutLabel, 4, 6);
+			//Arranjar verticalmente a Table e a HBox layoutEdi
+			grid.add(layoutEdit, 4, 8);
 			grid.add(layoutSub, 4, 7);
 			
-			funcionario.setCenter(grid);
+			cliente.setCenter(grid);
 			
 		});
 		
@@ -1781,20 +2010,20 @@ public class MenuOp {
 			GridPane grid = new GridPane();
 		    grid.setHgap(10);
 		    grid.setVgap(10);
-		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    grid.setPadding(new Insets(10,10,10,10));
 		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
 			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
 			
 			
-			colunaNome.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaNome.setMinWidth(250);	//Largura em pixeis da coluna
 			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 			//Nome do atributo, na ObservableList, onde vai ler os dados
-			colunaQuem.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaQuem.setMinWidth(240);	//Largura em pixeis da coluna
 			colunaQuem.setCellValueFactory(new PropertyValueFactory<>("autor"));
 			//Coluna Numero
 			
-			colunaNumero.setMinWidth(200);
+			colunaNumero.setMinWidth(130);
 			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
 			tableEnc.getColumns().clear();
 
@@ -1803,78 +2032,21 @@ public class MenuOp {
 			
 			//Carregar a lista com dados
 			tableEnc.setItems( carregarListaEncomendas() );
-			
-			//Campo Nª
-			TextField txtNumAluno = new TextField();
-			txtNumAluno.setPromptText("Preço");
-			txtNumAluno.setMinWidth(120);
-			txtNumAluno.setMaxWidth(120);
-			
-			//Campo Nome
-			TextField txtNomeAluno = new TextField();
-			txtNomeAluno.setPromptText("Nome");
-			//txtNomeAluno.setMinWidth(120);
-			txtNomeAluno.setMaxWidth(120);
-			
-			TextField txtNomeAutor = new TextField();
-			txtNomeAutor.setPromptText("Autor");
-			//txtNomeAluno.setMinWidth(120);
-			txtNomeAutor.setMaxWidth(120);
-			
-			
-			//Botões para adicionar
-			Button btnAdd = new Button("Encomendar");	//Botão Adicionar
-			btnAdd.setOnAction(a -> {
-				/* Se um dos campos estiver vazio, emite msg
-				 * Caso contrário, passa os dados para o método addAluno()*/
-				
-				if(txtNumAluno.getText().isEmpty() || txtNomeAluno.getText().isEmpty()) {
-					MenuOp.alertBox("ERRO",  "Preencha os campos");
-				}
-				else {
-					//TODO
-					//Se txtNumAluno não é número => ERRO
-					//Se txtNomeAluno não é texto => ERRO
-					
-					try
-				     {
-				      //Encomendas j = listaEnc.get(tableEnc.getSelectionModel().getSelectedIndex());
-					  Encomendas j = new Encomendas(txtNumAluno.getText(),txtNomeAluno.getText(),txtNomeAutor.getText());
-				      j.setNome(txtNomeAluno.getText());
-				      j.setPreco(txtNumAluno.getText());
-				      j.setAutor(txtNomeAutor.getText());
-				        
-				      System.out.println(j.getNome() + " " +listaEnc.get(tableEnc.getSelectionModel().getSelectedIndex()).getNome() );
-				      SQL.alterEnc(j, listaEnc.get(tableEnc.getSelectionModel().getSelectedIndex()));
-				      listaEnc.set(tableEnc.getSelectionModel().getSelectedIndex(), j);
-				      
-				      tableEnc.setItems(listaEnc);
-				      
 
-				     }
-				     catch(java.lang.ArrayIndexOutOfBoundsException erro)
-				     {
-				    	 erro.printStackTrace();
-				    	 MenuOp.alertBox("Erro", "Nao selecionou o objeto que quer alterar");
-				     }
-					txtNumAluno.clear();
-					txtNomeAluno.clear();
-				}
-			});
-			
-			HBox layoutEdit = new HBox(10);
-			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
-			layoutEdit.getChildren().addAll(txtNumAluno, txtNomeAluno,txtNomeAutor, btnAdd);
 			
 			//Arranjar verticalmente a Table e a HBox layoutEdit
 			VBox layoutSub = new VBox(10);
-			layoutSub.getChildren().addAll(tableEnc, layoutEdit);
+			layoutSub.getChildren().addAll(tableEnc);
 			
+			Label alter2 = new Label("Clique duas vezes para alterar");
+			HBox layoutLabel = new HBox(10);
+			layoutLabel.setPadding(new Insets(10, 10, 10, 10));
+			layoutLabel.setAlignment(Pos.CENTER);
+			layoutLabel.getChildren().addAll( alter2);
 			
-			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutLabel, 4, 6);
 			grid.add(layoutSub, 4, 7);
-			
-			funcionario.setCenter(grid);
+			cliente.setCenter(grid);
 		});
 		
 		MenuItem eliminarEncFunc = new MenuItem("Eliminar uma Encomenda");
@@ -1883,20 +2055,20 @@ public class MenuOp {
 			GridPane grid = new GridPane();
 		    grid.setHgap(10);
 		    grid.setVgap(10);
-		    grid.setPadding(new Insets(50, 50, 50, 50));
+		    grid.setPadding(new Insets(10,10,10,10));
 		    TableColumn<Encomendas, String> colunaNome = new TableColumn<>("Nome do Jogo");
 			TableColumn<Encomendas, String> colunaNumero = new TableColumn<>("Preço(Euros)");
 			TableColumn<Encomendas, String> colunaQuem = new TableColumn<>("Autor");
 			
 			
-			colunaNome.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaNome.setMinWidth(250);	//Largura em pixeis da coluna
 			colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 			//Nome do atributo, na ObservableList, onde vai ler os dados
-			colunaQuem.setMinWidth(200);	//Largura em pixeis da coluna
+			colunaQuem.setMinWidth(240);	//Largura em pixeis da coluna
 			colunaQuem.setCellValueFactory(new PropertyValueFactory<>("autor"));
 			//Coluna Numero
 			
-			colunaNumero.setMinWidth(200);
+			colunaNumero.setMinWidth(130);
 			colunaNumero.setCellValueFactory(new PropertyValueFactory<>("preco"));
 			tableEnc.getColumns().clear();
 
@@ -1906,28 +2078,19 @@ public class MenuOp {
 			//Carregar a lista com dados
 			tableEnc.setItems( carregarListaEncomendas() );
 			
-			//Campo Nª
-			TextField txtNumAluno = new TextField();
-			txtNumAluno.setPromptText("Preço");
-			txtNumAluno.setMinWidth(120);
-			txtNumAluno.setMaxWidth(120);
 			
-			//Campo Nome
-			TextField txtNomeAluno = new TextField();
-			txtNomeAluno.setPromptText("Nome");
-			//txtNomeAluno.setMinWidth(120);
-			txtNomeAluno.setMaxWidth(120);
-			
-			TextField txtNomeAutor = new TextField();
-			txtNomeAutor.setPromptText("Autor");
-			//txtNomeAluno.setMinWidth(120);
-			txtNomeAutor.setMaxWidth(120);
-			
-			
-			Button btnDel = new Button("Apagar");
+			//Botões para adicionar
+			Button btnDel = new Button("Delete");	//Botão Adicionar
+			btnDel.setStyle("-fx-background-color: #000000,linear-gradient(#7ebcea, #2f4b8f),linear-gradient(#426ab7, #263e75),linear-gradient(#395cab, #223768);"
+					+ "-fx-background-insets: 0,1,2,3;"
+					+ "-fx-background-radius: 3,2,2,2;"
+					+ "-fx-padding: 12 30 12 30;"
+					+ "-fx-text-fill: white;"
+					+ "-fx-font-size: 12px;");
+			btnDel.setMaxWidth(275);
 			btnDel.setOnAction(d -> {
 				//Vamos apanhar o item selecionado e compara-lo com a lista de Alunos
-				
+				//btnDel.setStyle("--fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),#9d4024,#d86e3a,radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);");
 				ObservableList<Encomendas> alunoSelected, listaJogos;
 				listaJogos = tableEnc.getItems();
 				alunoSelected = tableEnc.getSelectionModel().getSelectedItems();
@@ -1938,16 +2101,24 @@ public class MenuOp {
 			HBox layoutEdit = new HBox(10);
 			layoutEdit.setPadding(new Insets(10, 10, 10, 10));
 			layoutEdit.getChildren().addAll( btnDel);
-			
+			layoutEdit.setAlignment(Pos.CENTER);
 			//Arranjar verticalmente a Table e a HBox layoutEdit
 			VBox layoutSub = new VBox(10);
-			layoutSub.getChildren().addAll(tableEnc, layoutEdit);
+			layoutSub.getChildren().addAll(tableEnc);
+			
+			Label alter2 = new Label("Clique duas vezes para alterar");
+			HBox layoutLabel = new HBox(10);
+			layoutLabel.setPadding(new Insets(10, 10, 10, 10));
+			layoutLabel.setAlignment(Pos.CENTER);
+			layoutLabel.getChildren().addAll( alter2);
+			
+			grid.add(layoutLabel, 4, 6);
 			
 			
-			grid.add(layoutEdit, 4, 6);
+			grid.add(layoutEdit, 4, 8);
 			grid.add(layoutSub, 4, 7);
 			
-			funcionario.setCenter(grid);
+			cliente.setCenter(grid);
 			
 		});
 		
@@ -1965,7 +2136,7 @@ public class MenuOp {
 		img.setImage(img2);
 		
 		cliente.setCenter(img);
-		cliente.setStyle("-fx-text-fill: #FFFFFF;-fx-font-size: 13pt;-fx-background-color: #00004C;");
+		cliente.setStyle("-fx-text-fill: #FFFFFF;-fx-font-size: 13pt;-fx-background-color: #006BB2;");
 		Scene sceneCliente = new Scene(cliente,1250,700);
 		cliente.setTop(menuBarCliente);
 		
@@ -1985,7 +2156,7 @@ public class MenuOp {
 			janela.initModality(Modality.WINDOW_MODAL);	//Define uma janela Modal
 			janela.setTitle(title); 							//Como tÃ­tulo, recebe a string do parametro
 			janela.setMinWidth(200);							//Largura da janela
-			
+			janela.getIcons().add(new Image("icon.png"));
 			Label mensagem = new Label(msg); 					//Cria a label para mostra
 			mensagem.setStyle("-fx-text-fill: linear-gradient(white, #d0d0d0);");
 			Button btnClose = new Button("Fechar");				//Cria botÃ£o para fechar janela
